@@ -19,11 +19,13 @@ public class ControlesJuego implements KeyListener {
             // 65 -> a
             case 65 -> {
                 panel.getJugador().mover(-VELOCIDAD);
+                panel.repaint();
             }
 
             // 68 -> d
             case 68 -> {
                 panel.getJugador().mover(VELOCIDAD);
+                panel.repaint();
             }
         }
     }
