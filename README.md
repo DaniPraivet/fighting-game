@@ -7,7 +7,7 @@ Es un juego que he hecho en mis ratos libres porque estaba aburrido. En este cas
 ### Jugador
   - `w` -> Saltar
   - `a` -> Moverse a la izquierda
-  - `s` -> Moverse a la derecha
+  - `d` -> Moverse a la derecha
 
 ### Enemigo
   - `↑` -> Saltar
