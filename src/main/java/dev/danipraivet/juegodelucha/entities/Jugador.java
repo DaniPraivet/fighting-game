@@ -4,14 +4,14 @@ import dev.danipraivet.juegodelucha.map.Plataforma;
 
 import java.awt.*;
 
-public class Jugador implements Personaje {
+public class Jugador implements Personaje{
     private int x;
-    private int y;
-    private final int ANCHO = 10;
-    private final int ALTO = 10;
-    private int velocidadY = 0;
-    private final int gravedad = 1;
-    private final int velocidadDeSalto = -15;
+    private double y;
+    private final int ANCHO = 30;
+    private final int ALTO = 50;
+    private double velocidadY = 0;
+    private final double gravedad = 0.5;
+    private final int velocidadDeSalto = -10;
     private boolean enElAire = true;
 
     public int getX() {
@@ -22,7 +22,7 @@ public class Jugador implements Personaje {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -38,7 +38,7 @@ public class Jugador implements Personaje {
         return ALTO;
     }
 
-    public int getVelocidadY() {
+    public double getVelocidadY() {
         return velocidadY;
     }
 
@@ -46,7 +46,7 @@ public class Jugador implements Personaje {
         this.velocidadY = velocidadY;
     }
 
-    public int getGravedad() {
+    public double getGravedad() {
         return gravedad;
     }
 
@@ -90,20 +90,20 @@ public class Jugador implements Personaje {
 
     public void verificarColision(Plataforma plataforma) {
         if (y + ALTO >= plataforma.getY() &&
-            x + ANCHO > plataforma.getX() &&
-            x < plataforma.getX() + plataforma.getAncho()) {
-            
+                x + ANCHO > plataforma.getX() &&
+                x < plataforma.getX() + plataforma.getAncho()) {
+
             y = plataforma.getY() - ALTO;
             enElAire = false;
             velocidadY = 0;
         }
-        if ( x >= 550 || x <= 240 && !enElAire) {
+        if ( x <= 350 || x >= 1570 && !enElAire) {
             enElAire = true;
         }
     }
 
     public void dibujar(Graphics2D g) {
         g.setColor(Color.BLUE);
-        g.fillRect(x, y, ANCHO, ALTO);
+        g.fillRect(x,(int) y, ANCHO, ALTO);
     }
 }
