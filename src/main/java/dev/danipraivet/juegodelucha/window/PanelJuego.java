@@ -8,15 +8,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelJuego extends JPanel {
-    private Jugador jugador;
-    private Enemigo enemigo;
+    private final Jugador jugador;
+    private final Enemigo enemigo;
     private final Plataforma plataforma;
 
     public PanelJuego() {
         setBackground(Color.BLACK);
-        jugador = new Jugador(300, 100);
-        enemigo = new Enemigo( 400, 100);
-        plataforma = new Plataforma(250, 400, 300, 20);
+        jugador = new Jugador(500, 100);
+        enemigo = new Enemigo( 900, 100);
+        plataforma = new Plataforma(360, 400, 1200, 100);
 
         new Timer(16, e -> {
             actualizar();

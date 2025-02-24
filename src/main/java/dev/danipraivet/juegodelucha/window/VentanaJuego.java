@@ -7,7 +7,7 @@ import javax.swing.*;
 public class VentanaJuego extends JFrame {
     public VentanaJuego() {
         setTitle("Ñawlhalla");
-        setSize(800,600);
+        setSize(1920,1080);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setVisible(true);
