@@ -97,10 +97,13 @@ public class Jugador implements Personaje {
             enElAire = false;
             velocidadY = 0;
         }
+        if ( x >= 550 || x <= 240 && !enElAire) {
+            enElAire = true;
+        }
     }
 
     public void dibujar(Graphics2D g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillRect(x, y, ANCHO, ALTO);
     }
 }

@@ -27,6 +27,30 @@ public class ControlesJuego implements KeyListener {
                 panel.getJugador().mover(VELOCIDAD);
                 panel.repaint();
             }
+
+            // 87 -> w
+            case 87 -> {
+                panel.getJugador().saltar();
+                panel.repaint();
+            }
+
+            // arrowKLeft -> 37
+            case 37 -> {
+                panel.getEnemigo().mover(-VELOCIDAD);
+                panel.repaint();
+            }
+
+            // arrowKRight -> 39
+            case 39 -> {
+                panel.getEnemigo().mover(VELOCIDAD);
+                panel.repaint();
+            }
+
+            // arrowKUp -> 38
+            case 38 -> {
+                panel.getEnemigo().saltar();
+                panel.repaint();
+            }
         }
     }
     @Override
