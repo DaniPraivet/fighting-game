@@ -7,8 +7,8 @@ import java.awt.*;
 public class Jugador implements Personaje {
     private int x;
     private int y;
-    private final int ANCHO = 50;
-    private final int ALTO = 50;
+    private final int ANCHO = 10;
+    private final int ALTO = 10;
     private int velocidadY = 0;
     private final int gravedad = 1;
     private final int velocidadDeSalto = -15;

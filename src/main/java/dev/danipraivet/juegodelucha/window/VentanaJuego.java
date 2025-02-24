@@ -21,6 +21,6 @@ public class VentanaJuego extends JFrame {
         add(panelJuego);
 
         addKeyListener(new ControlesJuego(panelJuego));
-        requestFocus();
+        SwingUtilities.invokeLater(this::requestFocusInWindow);
     }
 }

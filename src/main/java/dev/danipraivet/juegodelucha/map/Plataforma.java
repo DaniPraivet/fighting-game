@@ -5,8 +5,8 @@ import java.awt.*;
 public class Plataforma implements Obstaculo {
     private int x;
     private int y;
-    private int ancho;
-    private int alto;
+    private final int ancho;
+    private final int alto;
 
     public Plataforma(int x, int y, int ancho, int alto) {
         this.x = x;
