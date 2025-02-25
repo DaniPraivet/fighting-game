@@ -14,8 +14,8 @@ public class PanelJuego extends JPanel {
 
     public PanelJuego() {
         setBackground(Color.BLACK);
-        jugador = new Jugador(500, 100);
-        enemigo = new Enemigo( 900, 100);
+        jugador = new Jugador(1400, 100);
+        enemigo = new Enemigo( 600, 100);
         plataforma = new Plataforma(360, 400, 1200, 100);
 
         new Timer(16, e -> {
@@ -39,11 +39,11 @@ public class PanelJuego extends JPanel {
         
         if (jugador.getY() > getHeight()) {
             jugador.setY(250);
-            jugador.setX(300);
+            jugador.setX(1400);
         }
         if (enemigo.getY() > getHeight()) {
             enemigo.setY(250);
-            enemigo.setX(400);
+            enemigo.setX(600);
         }
     }
 
