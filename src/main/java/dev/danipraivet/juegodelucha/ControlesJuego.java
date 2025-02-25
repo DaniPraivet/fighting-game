@@ -16,6 +16,10 @@ public class ControlesJuego implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
+
+
+            // CONTROLES JUGADOR
+
             // 65 -> a
             case 65 -> {
                 panel.getJugador().mover(-VELOCIDAD);
@@ -34,6 +38,16 @@ public class ControlesJuego implements KeyListener {
                 panel.repaint();
             }
 
+            // 83 -> s
+            case 83 -> {
+                panel.getJugador().acelerarCaida();
+                panel.actualizar();
+            }
+
+
+
+            // CONTROLES ENEMIGO
+
             // arrowKLeft -> 37
             case 37 -> {
                 panel.getEnemigo().mover(-VELOCIDAD);
@@ -51,6 +65,14 @@ public class ControlesJuego implements KeyListener {
                 panel.getEnemigo().saltar();
                 panel.repaint();
             }
+
+            // arrowKDown -> 40
+            case 40 -> {
+                panel.getEnemigo().acelerarCaida();
+                panel.actualizar();
+            }
+
+
         }
     }
     @Override

@@ -10,7 +10,7 @@ public class Jugador implements Personaje{
     private final int ANCHO = 30;
     private final int ALTO = 50;
     private double velocidadY = 0;
-    private final double gravedad = 0.5;
+    private double gravedad = 0.5;
     private final int velocidadDeSalto = -10;
     private boolean enElAire = true;
 
@@ -77,6 +77,7 @@ public class Jugador implements Personaje{
         if (!enElAire) {
             velocidadY = velocidadDeSalto;
             enElAire = true;
+            gravedad = 0.5;
         }
     }
 
@@ -85,6 +86,13 @@ public class Jugador implements Personaje{
         if (enElAire) {
             velocidadY += gravedad;
             y += velocidadY;
+        }
+    }
+
+    @Override
+    public void acelerarCaida() {
+        if (enElAire) {
+            gravedad = gravedad * 4;
         }
     }
 
