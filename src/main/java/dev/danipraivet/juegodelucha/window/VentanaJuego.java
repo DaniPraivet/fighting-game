@@ -6,10 +6,10 @@ import javax.swing.*;
 
 public class VentanaJuego extends JFrame {
     public static PanelJuego PANEL;
-    
+
     public VentanaJuego() {
         setTitle("Ñawlhalla");
-        setSize(1920,1080);
+        setSize(1920, 1080);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setVisible(true);

@@ -1,18 +1,19 @@
 package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
+
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Entidad {
-    protected int x;
-    protected double y;
     protected final int ANCHO;
     protected final int ALTO;
+    protected final int velocidadDeSalto = -10;
+    protected int x;
+    protected double y;
     protected double velocidadY = 0;
     protected double gravedad = 0.5;
-    protected final int velocidadDeSalto = -10;
     protected boolean enElAire = true;
     protected Color color;
 
@@ -79,7 +80,7 @@ public abstract class Entidad {
         int hitboxAncho = 100;
         int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
 
-        hitbox = new Rectangle(hitboxX, (int) y+20, hitboxAncho, 20);
+        hitbox = new Rectangle(hitboxX, (int) y + 20, hitboxAncho, 20);
         mostrarHitbox = true;
 
         new Timer().schedule(new TimerTask() {
@@ -98,8 +99,19 @@ public abstract class Entidad {
     }
 
 
-    public int getX() { return x; }
-    public double getY() { return y; }
-    public void setX(int x) { this.x = x; }
-    public void setY(int y) { this.y = y; }
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

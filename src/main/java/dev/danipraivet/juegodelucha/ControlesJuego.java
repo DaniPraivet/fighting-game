@@ -6,17 +6,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class ControlesJuego implements KeyListener {
-    private static boolean a, d, w, s;
-    
     private static final int VELOCIDAD = 10;
-    
+    private static boolean a, d, w, s;
+
     public static void update() {
         if (a) VentanaJuego.PANEL.getJugador().mover(-VELOCIDAD);
         if (d) VentanaJuego.PANEL.getJugador().mover(VELOCIDAD);
         if (w) VentanaJuego.PANEL.getJugador().saltar();
         if (s) VentanaJuego.PANEL.getJugador().acelerarCaida();
     }
-    
+
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -35,10 +34,11 @@ public class ControlesJuego implements KeyListener {
             case 80 -> VentanaJuego.PANEL.getEnemigo().atacar(VentanaJuego.PANEL.getJugador()); // P
         }
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {

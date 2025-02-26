@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 public class PanelJuego extends JPanel {
     private static final int FPS = 60;
-    private static boolean RUNNING = true;
-    
+    private static final boolean RUNNING = true;
+
     private final Jugador jugador;
     private final Enemigo enemigo;
     private final Plataforma plataforma;
@@ -20,18 +20,18 @@ public class PanelJuego extends JPanel {
     public PanelJuego(JFrame frame) {
         setBackground(Color.BLACK);
         setSize(frame.getSize());
-        
+
         setVisible(true);
         setFocusable(true);
-        
+
         jugador = new Jugador(1400, 100);
-        enemigo = new Enemigo( 600, 100);
+        enemigo = new Enemigo(600, 100);
         plataforma = new Plataforma(360, 400, 1200, 100);
 
-        
+
         new Thread(() -> {
             while (RUNNING) {
-                long time =  System.currentTimeMillis();
+                long time = System.currentTimeMillis();
 
                 actualizar();
                 repaint();
@@ -52,6 +52,7 @@ public class PanelJuego extends JPanel {
     public Jugador getJugador() {
         return jugador;
     }
+
     public Enemigo getEnemigo() {
         return enemigo;
     }
@@ -62,7 +63,7 @@ public class PanelJuego extends JPanel {
         enemigo.actualizar();
         jugador.verificarColision(plataforma);
         enemigo.verificarColision(plataforma);
-        
+
         if (jugador.getY() > getHeight()) {
             jugador.setY(250);
             jugador.setX(1400);
