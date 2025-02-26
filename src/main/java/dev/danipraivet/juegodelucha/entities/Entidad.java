@@ -2,6 +2,8 @@ package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class Entidad {
     protected int x;
@@ -13,6 +15,9 @@ public abstract class Entidad {
     protected final int velocidadDeSalto = -10;
     protected boolean enElAire = true;
     protected Color color;
+
+    protected Rectangle hitbox;
+    private boolean mostrarHitbox = false;
 
     public Entidad(int x, int y, int ancho, int alto, Color color) {
         this.x = x;
@@ -63,16 +68,32 @@ public abstract class Entidad {
     public void dibujar(Graphics2D g) {
         g.setColor(color);
         g.fillRect(x, (int) y, ANCHO, ALTO);
+
+        if (mostrarHitbox && hitbox != null) {
+            g.setColor(Color.YELLOW);
+            g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        }
     }
 
     public void atacar(Entidad oponente) {
-        int hitboxAncho = 40;
+        int hitboxAncho = 100;
         int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
 
-        Rectangle hitbox = new Rectangle(hitboxX, (int) y, hitboxAncho, ALTO);
+        hitbox = new Rectangle(hitboxX, (int) y+20, hitboxAncho, 20);
+        mostrarHitbox = true;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mostrarHitbox = false;
+            }
+        }, 200);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
-            System.out.println("!!!");
+            oponente.saltar();
+            for (int i = 0; i < 3; i++) {
+                oponente.mover(20);
+            }
         }
     }
 
