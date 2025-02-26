@@ -50,7 +50,6 @@ public class PanelJuego extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.RED);
         Graphics2D graphics2D = (Graphics2D) g;
 
         jugador.dibujar(graphics2D);
