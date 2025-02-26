@@ -1,4 +1,4 @@
-# juego-de-lucha-java
+# Ñawlhalla
 
 ## Introducción
 Es un juego que he hecho en mis ratos libres porque estaba aburrido. En este caso he querido basarme entre muchas comillas al juego `Brawlhalla` de ahí el nombre que le he puesto (`Ñawlhalla`), no tengo mucho conocimiento sobre Java, quería comprobar como era crear un juego lo más básico posible.
