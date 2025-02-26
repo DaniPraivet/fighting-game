@@ -1,5 +1,6 @@
 package dev.danipraivet.juegodelucha.window;
 
+import dev.danipraivet.juegodelucha.ControlesJuego;
 import dev.danipraivet.juegodelucha.entities.Enemigo;
 import dev.danipraivet.juegodelucha.entities.Jugador;
 import dev.danipraivet.juegodelucha.map.Plataforma;
@@ -19,11 +20,15 @@ public class PanelJuego extends JPanel {
     public PanelJuego(JFrame frame) {
         setBackground(Color.BLACK);
         setSize(frame.getSize());
+        
         setVisible(true);
+        setFocusable(true);
+        
         jugador = new Jugador(1400, 100);
         enemigo = new Enemigo( 600, 100);
         plataforma = new Plataforma(360, 400, 1200, 100);
 
+        
         new Thread(() -> {
             while (RUNNING) {
                 long time =  System.currentTimeMillis();
@@ -52,6 +57,7 @@ public class PanelJuego extends JPanel {
     }
 
     public void actualizar() {
+        ControlesJuego.update();
         jugador.actualizar();
         enemigo.actualizar();
         jugador.verificarColision(plataforma);
