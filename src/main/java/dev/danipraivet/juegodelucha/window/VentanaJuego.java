@@ -16,7 +16,7 @@ public class VentanaJuego extends JFrame {
         setAutoRequestFocus(true);
         setLocationRelativeTo(null);
 
-        PanelJuego panelJuego = new PanelJuego();
+        PanelJuego panelJuego = new PanelJuego(this);
 
         add(panelJuego);
 
