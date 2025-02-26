@@ -5,9 +5,11 @@ import dev.danipraivet.juegodelucha.ControlesJuego;
 import javax.swing.*;
 
 public class VentanaJuego extends JFrame {
+    public static PanelJuego PANEL;
+
     public VentanaJuego() {
         setTitle("Ñawlhalla");
-        setSize(1920,1080);
+        setSize(1920, 1080);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setVisible(true);
@@ -16,11 +18,11 @@ public class VentanaJuego extends JFrame {
         setAutoRequestFocus(true);
         setLocationRelativeTo(null);
 
-        PanelJuego panelJuego = new PanelJuego();
+        PANEL = new PanelJuego(this);
 
-        add(panelJuego);
+        add(PANEL);
 
-        addKeyListener(new ControlesJuego(panelJuego));
+        addKeyListener(new ControlesJuego());
         SwingUtilities.invokeLater(this::requestFocusInWindow);
     }
 }

@@ -1,42 +1,69 @@
 package dev.danipraivet.juegodelucha.window;
 
+import dev.danipraivet.juegodelucha.ControlesJuego;
 import dev.danipraivet.juegodelucha.entities.Enemigo;
 import dev.danipraivet.juegodelucha.entities.Jugador;
 import dev.danipraivet.juegodelucha.map.Plataforma;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class PanelJuego extends JPanel {
+    private static final int FPS = 60;
+    private static final boolean RUNNING = true;
+
     private final Jugador jugador;
     private final Enemigo enemigo;
     private final Plataforma plataforma;
 
-    public PanelJuego() {
+    public PanelJuego(JFrame frame) {
         setBackground(Color.BLACK);
+        setSize(frame.getSize());
+
+        setVisible(true);
+        setFocusable(true);
+
         jugador = new Jugador(1400, 100);
-        enemigo = new Enemigo( 600, 100);
+        enemigo = new Enemigo(600, 100);
         plataforma = new Plataforma(360, 400, 1200, 100);
 
-        new Timer(16, e -> {
-            actualizar();
-            repaint();
+
+        new Thread(() -> {
+            while (RUNNING) {
+                long time = System.currentTimeMillis();
+
+                actualizar();
+                repaint();
+
+                long elapsed = System.currentTimeMillis() - time;
+                long frameTime = 1000 / FPS;
+                long sleepTime = frameTime - elapsed;
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    System.out.println("Error generating next frame.");
+                }
+            }
         }).start();
     }
 
     public Jugador getJugador() {
         return jugador;
     }
+
     public Enemigo getEnemigo() {
         return enemigo;
     }
 
     public void actualizar() {
+        ControlesJuego.update();
         jugador.actualizar();
         enemigo.actualizar();
         jugador.verificarColision(plataforma);
         enemigo.verificarColision(plataforma);
-        
+
         if (jugador.getY() > getHeight()) {
             jugador.setY(250);
             jugador.setX(1400);
