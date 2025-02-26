@@ -4,7 +4,7 @@ import dev.danipraivet.juegodelucha.map.Plataforma;
 
 import java.awt.*;
 
-public class Enemigo implements Personaje{
+public class Enemigo extends Entidad{
     private int x;
     private double y;
     private final int ANCHO = 30;
@@ -63,55 +63,6 @@ public class Enemigo implements Personaje{
     }
 
     public Enemigo(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public void mover(int dx) {
-        x += dx;
-    }
-
-    @Override
-    public void saltar() {
-        if (!enElAire) {
-            velocidadY = velocidadDeSalto;
-            enElAire = true;
-            gravedad = 0.5;
-        }
-    }
-
-    @Override
-    public void actualizar() {
-        if (enElAire) {
-            velocidadY += gravedad;
-            y += velocidadY;
-        }
-    }
-
-    @Override
-    public void acelerarCaida() {
-        if (enElAire) {
-            gravedad = gravedad * 4;
-        }
-    }
-
-    public void verificarColision(Plataforma plataforma) {
-        if (y + ALTO >= plataforma.getY() &&
-                x + ANCHO > plataforma.getX() &&
-                x < plataforma.getX() + plataforma.getAncho()) {
-
-            y = plataforma.getY() - ALTO;
-            enElAire = false;
-            velocidadY = 0;
-        }
-        if ( x <= 350 || x >= 1570 && !enElAire) {
-            enElAire = true;
-        }
-    }
-
-    public void dibujar(Graphics2D g) {
-        g.setColor(Color.RED);
-        g.fillRect(x,(int) y, ANCHO, ALTO);
+        super(x,y,30,50,Color.RED);
     }
 }

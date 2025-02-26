@@ -12,67 +12,22 @@ public class ControlesJuego implements KeyListener {
     public ControlesJuego(PanelJuego panel) {
         this.panel = panel;
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
+            // Controles Jugador
+            case 65 -> panel.getJugador().mover(-VELOCIDAD); // A
+            case 68 -> panel.getJugador().mover(VELOCIDAD);  // D
+            case 87 -> panel.getJugador().saltar();          // W
+            case 83 -> panel.getJugador().acelerarCaida();   // S
+            case 69 -> panel.getJugador().atacar(panel.getEnemigo()); // E
 
-
-            // CONTROLES JUGADOR
-
-            // 65 -> a
-            case 65 -> {
-                panel.getJugador().mover(-VELOCIDAD);
-                panel.repaint();
-            }
-
-            // 68 -> d
-            case 68 -> {
-                panel.getJugador().mover(VELOCIDAD);
-                panel.repaint();
-            }
-
-            // 87 -> w
-            case 87 -> {
-                panel.getJugador().saltar();
-                panel.repaint();
-            }
-
-            // 83 -> s
-            case 83 -> {
-                panel.getJugador().acelerarCaida();
-                panel.actualizar();
-            }
-
-
-
-            // CONTROLES ENEMIGO
-
-            // arrowKLeft -> 37
-            case 37 -> {
-                panel.getEnemigo().mover(-VELOCIDAD);
-                panel.repaint();
-            }
-
-            // arrowKRight -> 39
-            case 39 -> {
-                panel.getEnemigo().mover(VELOCIDAD);
-                panel.repaint();
-            }
-
-            // arrowKUp -> 38
-            case 38 -> {
-                panel.getEnemigo().saltar();
-                panel.repaint();
-            }
-
-            // arrowKDown -> 40
-            case 40 -> {
-                panel.getEnemigo().acelerarCaida();
-                panel.actualizar();
-            }
-
-
+            // Controles Enemigo
+            case 37 -> panel.getEnemigo().mover(-VELOCIDAD); // ←
+            case 39 -> panel.getEnemigo().mover(VELOCIDAD);  // →
+            case 38 -> panel.getEnemigo().saltar();          // ↑
+            case 40 -> panel.getEnemigo().acelerarCaida();   // ↓
+            case 80 -> panel.getEnemigo().atacar(panel.getJugador()); // P
         }
     }
     @Override
