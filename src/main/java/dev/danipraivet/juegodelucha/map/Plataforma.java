@@ -3,10 +3,10 @@ package dev.danipraivet.juegodelucha.map;
 import java.awt.*;
 
 public class Plataforma implements Obstaculo {
-    private int x;
-    private int y;
     private final int ancho;
     private final int alto;
+    private final int x;
+    private final int y;
 
     public Plataforma(int x, int y, int ancho, int alto) {
         this.x = x;
