@@ -1,6 +1,7 @@
 package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
+import dev.danipraivet.juegodelucha.math.Velocity;
 
 import java.awt.*;
 import java.util.Timer;
@@ -12,9 +13,8 @@ public abstract class Entidad {
     protected final int velocidadDeSalto = -10;
     protected int x;
     protected double y;
-    protected double velocidadY = 0;
-    protected double gravedad = 0.5;
-    protected boolean enElAire = true;
+    public Velocity velocity;
+    public boolean enElAire = true;
     protected Color color;
     protected boolean congelado = false;
     protected int vida = 100;
@@ -28,33 +28,30 @@ public abstract class Entidad {
         this.ANCHO = ancho;
         this.ALTO = alto;
         this.color = color;
+        this.velocity = new Velocity(0, 0);
     }
 
     public void mover(int dx) {
         if (!congelado) {
-            x += dx;
+            velocity.setVelocityX(dx);
         }
-
     }
 
     public void saltar() {
         if (!enElAire) {
-            velocidadY = velocidadDeSalto;
+            velocity.setVelocityY(velocidadDeSalto);
             enElAire = true;
-            gravedad = 0.5;
+            velocity.setDefaultGravity();
         }
     }
 
     public void actualizar() {
-        if (enElAire) {
-            velocidadY += gravedad;
-            y += velocidadY;
-        }
+        velocity.update(this);
     }
 
     public void acelerarCaida() {
         if (enElAire) {
-            gravedad *= 4;
+            velocity.setGravity(velocity.getGravity() * 1.25);
         }
     }
 
@@ -67,7 +64,7 @@ public abstract class Entidad {
         if (sobrePlataforma) {
             y = plataforma.getY() - ALTO;
             enElAire = false;
-            velocidadY = 0;
+            velocity.setVelocityY(0);
         } else if (!enElAire){
             enElAire = true;
         }
@@ -136,7 +133,7 @@ public abstract class Entidad {
         g.fillRect(barraX, barraY, barraAncho, barraAlto);
 
         g.setColor(Color.GREEN);
-        g.fillRect(barraX, barraY, (int) (barraAncho * (vida / 100)), barraAlto);
+        g.fillRect(barraX, barraY, barraAncho * (vida / 100), barraAlto);
 
         g.setColor(Color.BLACK);
         g.drawRect(barraX, barraY, barraAncho, barraAlto);
