@@ -59,14 +59,16 @@ public abstract class Entidad {
     }
 
     public void verificarColision(Plataforma plataforma) {
-        if (y + ALTO >= plataforma.getY() &&
+        boolean sobrePlataforma =
+                y + ALTO >= plataforma.getY() &&
                 x + ANCHO > plataforma.getX() &&
-                x < plataforma.getX() + plataforma.getAncho()) {
+                x < plataforma.getX() + plataforma.getAncho();
+
+        if (sobrePlataforma) {
             y = plataforma.getY() - ALTO;
             enElAire = false;
             velocidadY = 0;
-        }
-        if ((x <= 350 || x >= 1570) && !enElAire) {
+        } else if (!enElAire){
             enElAire = true;
         }
     }

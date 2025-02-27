@@ -24,9 +24,18 @@ public class PanelJuego extends JPanel {
         setVisible(true);
         setFocusable(true);
 
-        jugador = new Jugador(1400, 100);
-        enemigo = new Enemigo(600, 100);
-        plataforma = new Plataforma(360, 400, 1200, 100);
+        int plataformaX = VentanaJuego.ANCHO_VENTANA / 4;
+        int plataformaY = VentanaJuego.ALTO_VENTANA -200;
+        int plataformaAncho = VentanaJuego.ANCHO_VENTANA / 2;
+        int plataformaAlto = 100;
+
+        jugador = new Jugador(plataformaX + 50,plataformaY -50);
+        enemigo = new Enemigo(plataformaX + plataformaAncho -80, plataformaY -50);
+        plataforma = new Plataforma(
+                plataformaX,
+                plataformaY,
+                plataformaAncho,
+                plataformaAlto);
 
 
         new Thread(() -> {
