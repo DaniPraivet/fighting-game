@@ -31,7 +31,10 @@ public abstract class Entidad {
     }
 
     public void mover(int dx) {
-        x += dx;
+        if (!congelado) {
+            x += dx;
+        }
+
     }
 
     public void saltar() {
@@ -90,14 +93,14 @@ public abstract class Entidad {
             public void run() {
                 congelado = false;
             }
-        }, 300);
+        }, 750);
 
         int hitboxAncho = 100;
         int hitboxAlto = 20;
         int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
         int hitboxY = (int) y + (ALTO / 3);
 
-        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, 20);
+        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
         mostrarHitbox = true;
 
         new Timer().schedule(new TimerTask() {
@@ -105,7 +108,7 @@ public abstract class Entidad {
             public void run() {
                 mostrarHitbox = false;
             }
-        }, 300);
+        }, 750);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
             oponente.recibirDanio(20);
