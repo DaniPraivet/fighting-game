@@ -51,7 +51,7 @@ public abstract class Entidad {
 
     public void acelerarCaida() {
         if (enElAire) {
-            velocity.setGravity(velocity.getGravity() * 1.25);
+            velocity.setGravity(velocity.getGravity() * 1.15);
         }
     }
 
