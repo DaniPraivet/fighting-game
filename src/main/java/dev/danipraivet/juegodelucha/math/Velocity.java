@@ -6,6 +6,7 @@ public class Velocity {
     private static final double DEFAULT_GRAVITY = 0.5;
     private static final double AIR_FRICTION = 0.2;
     private static final double PLATFORM_FRICTION = 1.25;
+    private static final int MAX_VELOCITY = 10;
     private double x;
     private double y;
     private double gravity = 0.5;
@@ -33,6 +34,8 @@ public class Velocity {
             this.x -= friction;
             if (this.x < 0) this.x = 0;
         }
+        
+        
 
         entidad.setX(x);
         entidad.setY(y);
@@ -40,6 +43,22 @@ public class Velocity {
 
     public void setVelocityX(double x) {
         this.x = x;
+    }
+    
+    public void addVelocityX(double x) {
+        if (this.x > 0) {
+            this.x -= x / Math.min(this.x, -1) / 2;
+        } else if (this.x < 0) {
+            this.x += x / Math.max(this.x, 1) / 2;
+        } else {
+            this.x += x;
+        }
+
+        if (this.x > MAX_VELOCITY) {
+            this.x = MAX_VELOCITY;
+        } else if (this.x < -MAX_VELOCITY) {
+            this.x = -MAX_VELOCITY;
+        }
     }
 
     public void setVelocityY(double y) {
