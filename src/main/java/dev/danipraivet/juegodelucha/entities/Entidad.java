@@ -16,6 +16,8 @@ public abstract class Entidad {
     protected double gravedad = 0.5;
     protected boolean enElAire = true;
     protected Color color;
+    protected boolean congelado = false;
+    protected int vida = 100;
 
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
@@ -69,18 +71,33 @@ public abstract class Entidad {
     public void dibujar(Graphics2D g) {
         g.setColor(color);
         g.fillRect(x, (int) y, ANCHO, ALTO);
+        dibujarBarraVida(g);
 
         if (mostrarHitbox && hitbox != null) {
+            g.setColor(new Color(255,255,0,150));
+            g.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
             g.setColor(Color.YELLOW);
             g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
         }
     }
 
     public void atacar(Entidad oponente) {
-        int hitboxAncho = 100;
-        int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
+        if (congelado) return;
 
-        hitbox = new Rectangle(hitboxX, (int) y + 20, hitboxAncho, 20);
+        congelado = true;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                congelado = false;
+            }
+        }, 300);
+
+        int hitboxAncho = 100;
+        int hitboxAlto = 20;
+        int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
+        int hitboxY = (int) y + (ALTO / 3);
+
+        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, 20);
         mostrarHitbox = true;
 
         new Timer().schedule(new TimerTask() {
@@ -88,15 +105,38 @@ public abstract class Entidad {
             public void run() {
                 mostrarHitbox = false;
             }
-        }, 200);
+        }, 300);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
+            oponente.recibirDanio(20);
             oponente.saltar();
-            for (int i = 0; i < 3; i++) {
-                oponente.mover(20);
-            }
         }
+
+
+
     }
+
+    public void recibirDanio (int cantidad) {
+        vida -= cantidad;
+        if (vida < 0) vida = 0;
+    }
+
+    public void dibujarBarraVida (Graphics2D g) {
+        int barraAncho = ANCHO;
+        int barraAlto = 5;
+        int barraX = x;
+        int barraY = (int) y - 10;
+
+        g.setColor(Color.RED);
+        g.fillRect(barraX, barraY, barraAncho, barraAlto);
+
+        g.setColor(Color.GREEN);
+        g.fillRect(barraX, barraY, (int) (barraAncho * (vida / 100)), barraAlto);
+
+        g.setColor(Color.BLACK);
+        g.drawRect(barraX, barraY, barraAncho, barraAlto);
+    }
+
 
 
     public int getX() {
