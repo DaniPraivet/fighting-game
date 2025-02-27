@@ -33,7 +33,7 @@ public abstract class Entidad {
 
     public void mover(int dx) {
         if (!congelado) {
-            velocity.setVelocityX(dx);
+            velocity.addVelocityX(dx);
         }
     }
 
