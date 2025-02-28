@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 public abstract class Entidad {
     protected final int ANCHO;
-    protected final int ALTO;
+    public final int ALTO;
     protected final int velocidadDeSalto = -10;
     protected int x;
     protected double y;
