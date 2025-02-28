@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class ControlesJuego implements KeyListener {
-    private static final int VELOCIDAD = 10;
+    private static final int VELOCIDAD = 5;
     private static boolean a, d, w, s, arrowKLeft, arrowKRight, arrowKUp, arrowKDown;
 
     public static void update() {
