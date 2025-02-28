@@ -74,12 +74,12 @@ public class PanelJuego extends JPanel {
         enemigo.verificarColision(plataforma);
 
         if (jugador.getY() > getHeight()) {
-            jugador.setY(250);
-            jugador.setX(1400);
+            jugador.setY(plataforma.getY() - jugador.ALTO);
+            jugador.setX(plataforma.getX() + plataforma.getAncho() / 3);
         }
         if (enemigo.getY() > getHeight()) {
-            enemigo.setY(250);
-            enemigo.setX(600);
+            enemigo.setY(plataforma.getY() - enemigo.ALTO);
+            enemigo.setX(plataforma.getX() + (plataforma.getAncho() * 2) / 3);
         }
     }
 
