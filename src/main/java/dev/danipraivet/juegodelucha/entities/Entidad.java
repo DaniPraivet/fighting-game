@@ -7,9 +7,9 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class Entidad {
+public abstract class Entidad implements Personaje{
     protected final int ANCHO;
-    protected final int ALTO;
+    public final int ALTO;
     protected final int velocidadDeSalto = -10;
     protected int x;
     protected double y;
