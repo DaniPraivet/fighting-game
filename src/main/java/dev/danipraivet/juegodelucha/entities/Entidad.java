@@ -132,12 +132,12 @@ public abstract class Entidad implements Personaje{
 
     public void aumentarDaño (int cantidad) {
         daño += cantidad;
-        if (daño < 999) daño = 999;
+        if (daño > 999) daño = 999;
     }
 
     public void retroceso(int baseRetroceso) {
         int direccion = (x < VentanaJuego.PANEL.getEnemigo().getX()) ? -1 : 1;
-        double retrocesoFinal = baseRetroceso * (1 + (daño / 100.0)/10);
+        double retrocesoFinal = baseRetroceso * (1 + (daño / 10.0)/10);
 
         velocity.setVelocityX(retrocesoFinal * direccion);
         velocity.setVelocityY(retrocesoFinal/2);
@@ -169,13 +169,19 @@ public abstract class Entidad implements Personaje{
 
         Color colorBarra;
 
-        if (daño < 50) {
-            colorBarra = new Color(255, 255,0);
+        if (daño == 0) {
+           colorBarra = new Color(255,255,255);
+        } else if (daño < 25) {
+            colorBarra = new Color(255, 255,150);
         } else if (daño < 100) {
+            colorBarra = new Color(255,255,0);
+        } else if (daño < 125) {
             colorBarra = new Color(255, 128,0);
         } else if (daño < 150) {
-            colorBarra = new Color(255, 0,0);
-        } else if (daño < 200) {
+            colorBarra = new Color(255,85,0);
+        } else if (daño < 175) {
+            colorBarra = new Color(255,0,0);
+        }else if (daño < 225) {
             colorBarra = new Color(100, 0,0);
         } else {
             colorBarra = Color.BLACK;
@@ -183,11 +189,13 @@ public abstract class Entidad implements Personaje{
 
 
 
+
+
         g.setColor(new Color (60,0,0));
         g.fillRect(barraX, barraY, barraAncho, barraAlto);
 
         g.setColor(colorBarra);
-        g.fillRect(barraX, barraY, Math.min((int) (barraAncho * (daño / 300.0)), barraAncho), barraAlto);
+        g.fillRect(barraX, barraY, barraAncho, barraAlto);
 
         g.setColor(Color.BLACK);
         g.drawRect(barraX, barraY, barraAncho, barraAlto);
