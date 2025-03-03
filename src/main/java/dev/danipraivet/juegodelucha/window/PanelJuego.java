@@ -15,7 +15,11 @@ public class PanelJuego extends JPanel {
 
     private final Jugador jugador;
     private final Enemigo enemigo;
-    private final Plataforma plataforma;
+    public final Plataforma plataforma;
+
+    public Plataforma getPlataforma() {
+        return plataforma;
+    }
 
     public PanelJuego(JFrame frame) {
         setBackground(Color.BLACK);
@@ -74,12 +78,10 @@ public class PanelJuego extends JPanel {
         enemigo.verificarColision(plataforma);
 
         if (jugador.getY() > getHeight()) {
-            jugador.setY(plataforma.getY() - jugador.ALTO);
-            jugador.setX(plataforma.getX() + plataforma.getAncho() / 3);
+            jugador.perderVida(plataforma);
         }
         if (enemigo.getY() > getHeight()) {
-            enemigo.setY(plataforma.getY() - enemigo.ALTO);
-            enemigo.setX(plataforma.getX() + (plataforma.getAncho() * 2) / 3);
+            enemigo.perderVida(plataforma);
         }
     }
 

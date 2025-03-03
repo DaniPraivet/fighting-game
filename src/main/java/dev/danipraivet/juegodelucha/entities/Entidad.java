@@ -2,10 +2,13 @@ package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
 import dev.danipraivet.juegodelucha.math.Velocity;
+import dev.danipraivet.juegodelucha.window.PanelJuego;
+import dev.danipraivet.juegodelucha.window.VentanaJuego;
 
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 public abstract class Entidad implements Personaje{
     protected final int ANCHO;
@@ -17,7 +20,8 @@ public abstract class Entidad implements Personaje{
     public boolean enElAire = true;
     protected Color color;
     protected boolean congelado = false;
-    protected int vida = 100;
+    protected int daño = 0;
+    protected int vidas = 3;
 
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
@@ -110,17 +114,43 @@ public abstract class Entidad implements Personaje{
         }, 750);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
-            oponente.recibirDanio(20);
-            oponente.saltar();
+            oponente.aumentarDaño(10);
+            oponente.retroceso(10);
         }
 
 
 
     }
 
-    public void recibirDanio (int cantidad) {
-        vida -= cantidad;
-        if (vida < 0) vida = 0;
+    public void aumentarDaño (int cantidad) {
+        daño += cantidad;
+        if (daño < 999) daño = 999;
+    }
+
+    public void retroceso(int baseRetroceso) {
+        int direccion = (x < VentanaJuego.PANEL.getEnemigo().getX()) ? -1 : 1;
+        double retrocesoFinal = baseRetroceso * (1 + (daño / 100.0)/10);
+
+        velocity.setVelocityX(retrocesoFinal * direccion);
+        velocity.setVelocityY(retrocesoFinal/2);
+        enElAire = true;
+    }
+
+    public void perderVida(Plataforma plataforma) {
+        vidas--;
+        daño = 0;
+
+        if (vidas <= 0) {
+            System.out.println("GG");
+            return;
+        }
+        if (this instanceof Jugador) {
+            setX(plataforma.getX() + plataforma.getAncho() / 3);
+        } else if (this instanceof Enemigo) {
+            setX(plataforma.getX() + (plataforma.getAncho() * 2) / 3);
+        }
+
+        setY(plataforma.getY() - ALTO);
     }
 
     public void dibujarBarraVida (Graphics2D g) {
@@ -129,11 +159,27 @@ public abstract class Entidad implements Personaje{
         int barraX = x;
         int barraY = (int) y - 10;
 
-        g.setColor(Color.RED);
+        Color colorBarra;
+
+        if (daño < 50) {
+            colorBarra = new Color(255, 255,0);
+        } else if (daño < 100) {
+            colorBarra = new Color(255, 128,0);
+        } else if (daño < 150) {
+            colorBarra = new Color(255, 0,0);
+        } else if (daño < 200) {
+            colorBarra = new Color(100, 0,0);
+        } else {
+            colorBarra = Color.BLACK;
+        }
+
+
+
+        g.setColor(new Color (60,0,0));
         g.fillRect(barraX, barraY, barraAncho, barraAlto);
 
-        g.setColor(Color.GREEN);
-        g.fillRect(barraX, barraY, barraAncho * (vida / 100), barraAlto);
+        g.setColor(colorBarra);
+        g.fillRect(barraX, barraY, Math.min((int) (barraAncho * (daño / 300.0)), barraAncho), barraAlto);
 
         g.setColor(Color.BLACK);
         g.drawRect(barraX, barraY, barraAncho, barraAlto);
