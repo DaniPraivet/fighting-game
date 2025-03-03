@@ -62,6 +62,18 @@ public class PanelJuego extends JPanel {
         }).start();
     }
 
+    private void dibujarInterfaz(Graphics2D g) {
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Consolas", Font.BOLD, 20));
+
+        String textoJugador = "Jugador -> " + jugador.getVidas() + " vidas | " + jugador.getDaño() + " daño";
+        g.drawString(textoJugador, 50, 50);
+
+        String textoEnemigo = "Enemigo -> " + enemigo.getVidas() + " vidas | " + enemigo.getDaño() + " daño";
+        int anchoTexto = g.getFontMetrics().stringWidth(textoEnemigo);
+        g.drawString(textoEnemigo, VentanaJuego.ANCHO_VENTANA - anchoTexto - 50, 50);
+    }
+
     public Jugador getJugador() {
         return jugador;
     }
@@ -93,5 +105,7 @@ public class PanelJuego extends JPanel {
         jugador.dibujar(graphics2D);
         enemigo.dibujar(graphics2D);
         plataforma.dibujar(graphics2D);
+
+        dibujarInterfaz(graphics2D);
     }
 }

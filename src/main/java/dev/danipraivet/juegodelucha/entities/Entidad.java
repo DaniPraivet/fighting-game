@@ -35,6 +35,14 @@ public abstract class Entidad implements Personaje{
         this.velocity = new Velocity(0, 0);
     }
 
+    public int getVidas() {
+        return vidas;
+    }
+
+    public int getDaño() {
+        return daño;
+    }
+
     public void mover(int dx) {
         if (!congelado) {
             velocity.addVelocityX(dx);
