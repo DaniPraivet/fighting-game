@@ -2,7 +2,6 @@ package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
 import dev.danipraivet.juegodelucha.math.Velocity;
-import dev.danipraivet.juegodelucha.window.PanelJuego;
 import dev.danipraivet.juegodelucha.window.VentanaJuego;
 
 import java.awt.*;
@@ -144,13 +143,13 @@ public abstract class Entidad implements Personaje{
         enElAire = true;
     }
 
-    public void perderVida(Plataforma plataforma) {
+    public boolean perderVida(Plataforma plataforma) {
         vidas--;
         daño = 0;
 
         if (vidas <= 0) {
-            System.out.println("GG");
-            return;
+            vidas = 0;
+            return false;
         }
         if (this instanceof Jugador) {
             setX(plataforma.getX() + plataforma.getAncho() / 3);
@@ -159,37 +158,16 @@ public abstract class Entidad implements Personaje{
         }
 
         setY(plataforma.getY() - ALTO);
+        return true;
     }
 
-    public void dibujarBarraVida (Graphics2D g) {
+    public void dibujarBarraVida(Graphics2D g) {
         int barraAncho = ANCHO;
         int barraAlto = 5;
         int barraX = x;
         int barraY = (int) y - 10;
 
-        Color colorBarra;
-
-        if (daño == 0) {
-           colorBarra = new Color(255,255,255);
-        } else if (daño < 25) {
-            colorBarra = new Color(255, 255,150);
-        } else if (daño < 100) {
-            colorBarra = new Color(255,255,0);
-        } else if (daño < 125) {
-            colorBarra = new Color(255, 128,0);
-        } else if (daño < 150) {
-            colorBarra = new Color(255,85,0);
-        } else if (daño < 175) {
-            colorBarra = new Color(255,0,0);
-        }else if (daño < 225) {
-            colorBarra = new Color(100, 0,0);
-        } else {
-            colorBarra = Color.BLACK;
-        }
-
-
-
-
+        Color colorBarra = DamageColors.getColor(daño);
 
         g.setColor(new Color (60,0,0));
         g.fillRect(barraX, barraY, barraAncho, barraAlto);
