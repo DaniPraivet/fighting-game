@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PanelJuego extends JPanel {
     private static final int FPS = 60;
-    private static final boolean RUNNING = true;
+    private static boolean RUNNING = true;
 
     private final Jugador jugador;
     private final Enemigo enemigo;
@@ -45,9 +45,8 @@ public class PanelJuego extends JPanel {
         new Thread(() -> {
             while (RUNNING) {
                 long time = System.currentTimeMillis();
-
-                actualizar();
-                repaint();
+                    actualizar();
+                    repaint();
 
                 long elapsed = System.currentTimeMillis() - time;
                 long frameTime = 1000 / FPS;
@@ -90,10 +89,11 @@ public class PanelJuego extends JPanel {
         enemigo.verificarColision(plataforma);
 
         if (jugador.getY() > getHeight()) {
-            jugador.perderVida(plataforma);
+            RUNNING = jugador.perderVida(plataforma);
+
         }
         if (enemigo.getY() > getHeight()) {
-            enemigo.perderVida(plataforma);
+            RUNNING = enemigo.perderVida(plataforma);
         }
     }
 
