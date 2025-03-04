@@ -2,7 +2,6 @@ package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
 import dev.danipraivet.juegodelucha.math.Velocity;
-import dev.danipraivet.juegodelucha.window.VentanaJuego;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,6 +77,7 @@ public abstract class Entidad implements Personaje{
             y = plataforma.getY() - ALTO;
             enElAire = false;
             velocity.setVelocityY(0);
+            velocity.setDefaultGravity();
         } else if (!enElAire){
             enElAire = true;
         }
@@ -130,24 +130,21 @@ public abstract class Entidad implements Personaje{
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
             oponente.aumentarDaño(10);
-            oponente.retroceso(10);
+            oponente.retroceso(this, 10);
         }
-
-
-
     }
 
-    public void aumentarDaño (int cantidad) {
+    public void aumentarDaño(int cantidad) {
         daño += cantidad;
         if (daño > 999) daño = 999;
     }
 
-    public void retroceso(int baseRetroceso) {
-        int direccion = (x < VentanaJuego.PANEL.getEnemigo().getX()) ? -1 : 1;
+    public void retroceso(Entidad enemy, int baseRetroceso) {
+        int direccion = (x < enemy.getX()) ? -1 : 1;
         double retrocesoFinal = baseRetroceso * (1 + (daño / 10.0)/10);
 
         velocity.setVelocityX(retrocesoFinal * direccion);
-        velocity.setVelocityY(retrocesoFinal/2);
+        velocity.setVelocityY(-retrocesoFinal);
         enElAire = true;
     }
 
@@ -196,8 +193,6 @@ public abstract class Entidad implements Personaje{
             System.out.println("No se pudo cargar la imagen: " + rutaImagen);
         }
     }
-
-
 
     public int getX() {
         return x;
