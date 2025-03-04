@@ -4,7 +4,9 @@ import dev.danipraivet.juegodelucha.map.Plataforma;
 import dev.danipraivet.juegodelucha.math.Velocity;
 import dev.danipraivet.juegodelucha.window.VentanaJuego;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -82,17 +84,23 @@ public abstract class Entidad implements Personaje{
     }
 
     public void dibujar(Graphics2D g) {
-        g.setColor(color);
-        g.fillRect(x, (int) y, ANCHO, ALTO);
+        if (sprite != null) {
+            g.drawImage(sprite, x, (int) y, ANCHO, ALTO, null);
+        } else {
+            g.setColor(color);
+            g.fillRect(x, (int) y, ANCHO, ALTO);
+        }
+
         dibujarBarraVida(g);
 
         if (mostrarHitbox && hitbox != null) {
-            g.setColor(new Color(255,255,0,150));
+            g.setColor(new Color(255, 255, 0, 150));
             g.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
             g.setColor(Color.YELLOW);
             g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
         }
     }
+
 
     public void atacar(Entidad oponente) {
         if (congelado) return;
@@ -177,6 +185,16 @@ public abstract class Entidad implements Personaje{
 
         g.setColor(Color.BLACK);
         g.drawRect(barraX, barraY, barraAncho, barraAlto);
+    }
+
+    protected Image sprite;
+
+    public void setSprite(String rutaImagen) {
+        try {
+            sprite = new ImageIcon(Objects.requireNonNull(getClass().getResource(rutaImagen))).getImage();
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la imagen: " + rutaImagen);
+        }
     }
 
 
