@@ -144,21 +144,12 @@ public abstract class Entidad implements Personaje{
 
     public void retroceso(Entidad enemy, int baseRetroceso) {
         int direccion = (x < enemy.getX()) ? -1 : 1;
-        //double retrocesoFinal = baseRetroceso * (1 + (danyo / 10.0)/10);
-        double retrocesoFinal = (Math.sqrt(4000)/danyo);
-        /*
-        (x-h)^2=4p(y-k)
-        x=danyo
-        h=0
-        p=1000
-        y=0
-        k=0
-         */
+        double retrocesoFinal = 5+(Math.pow(danyo, 2)) / (4 * 500);
 
 
 
         velocity.setVelocityX(retrocesoFinal * direccion);
-        velocity.setVelocityY(-retrocesoFinal);
+        velocity.setVelocityY(-retrocesoFinal/1.5);
         enElAire = true;
     }
 
