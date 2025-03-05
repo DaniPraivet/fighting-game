@@ -10,12 +10,20 @@ public class ControlesJuego implements KeyListener {
     private static boolean a, d, w, s, arrowKLeft, arrowKRight, arrowKUp, arrowKDown;
 
     public static void update() {
-        if (a) VentanaJuego.PANEL.getJugador().mover(-VELOCIDAD);
-        if (d) VentanaJuego.PANEL.getJugador().mover(VELOCIDAD);
+        if (a) {VentanaJuego.PANEL.getJugador().mover(-VELOCIDAD);
+            VentanaJuego.PANEL.getJugador().setSprite("/entities/sprites/player-left.png");
+        }
+        if (d) {VentanaJuego.PANEL.getJugador().mover(VELOCIDAD);
+            VentanaJuego.PANEL.getJugador().setSprite("/entities/sprites/player-right.png");
+        }
         if (w) VentanaJuego.PANEL.getJugador().saltar();
         if (s) VentanaJuego.PANEL.getJugador().acelerarCaida();
-        if (arrowKLeft) VentanaJuego.PANEL.getEnemigo().mover(-VELOCIDAD);
-        if (arrowKRight) VentanaJuego.PANEL.getEnemigo().mover(VELOCIDAD);
+        if (arrowKLeft) {VentanaJuego.PANEL.getEnemigo().mover(-VELOCIDAD);
+            VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-left.png");
+        }
+        if (arrowKRight) {VentanaJuego.PANEL.getEnemigo().mover(VELOCIDAD);
+            VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-right.png");
+        }
         if (arrowKUp) VentanaJuego.PANEL.getEnemigo().saltar();
         if (arrowKDown) VentanaJuego.PANEL.getEnemigo().acelerarCaida();
     }
