@@ -22,6 +22,7 @@ public abstract class Entidad implements Personaje{
     protected boolean congelado = false;
     protected int danyo = 0;
     protected int vidas = 3;
+    protected int saltosRestantes = 2;
 
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
@@ -50,10 +51,12 @@ public abstract class Entidad implements Personaje{
     }
 
     public void saltar() {
-        if (!enElAire) {
+        if (saltosRestantes > 0) {
             velocity.setVelocityY(velocidadDeSalto);
             enElAire = true;
             velocity.setDefaultGravity();
+            saltosRestantes--;
+            System.out.println(saltosRestantes);
         }
     }
 
@@ -78,6 +81,7 @@ public abstract class Entidad implements Personaje{
             enElAire = false;
             velocity.setVelocityY(0);
             velocity.setDefaultGravity();
+            saltosRestantes = 2;
         } else if (!enElAire){
             enElAire = true;
         }
