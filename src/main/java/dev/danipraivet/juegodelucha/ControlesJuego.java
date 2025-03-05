@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 public class ControlesJuego implements KeyListener {
     private static final int VELOCIDAD = 5;
     private static boolean a, d, w, s, arrowKLeft, arrowKRight, arrowKUp, arrowKDown;
+    private static boolean puedeSaltar = true;
 
     public static void update() {
         if (a) {VentanaJuego.PANEL.getJugador().mover(-VELOCIDAD);
@@ -16,7 +17,20 @@ public class ControlesJuego implements KeyListener {
         if (d) {VentanaJuego.PANEL.getJugador().mover(VELOCIDAD);
             VentanaJuego.PANEL.getJugador().setSprite("/entities/sprites/player-right.png");
         }
-        if (w) VentanaJuego.PANEL.getJugador().saltar();
+        if (w && puedeSaltar) {
+            VentanaJuego.PANEL.getJugador().saltar();
+            puedeSaltar = false;
+
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(250); // Esperar 250ms
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                puedeSaltar = true;
+            }).start();
+        }
         if (s) VentanaJuego.PANEL.getJugador().acelerarCaida();
         if (arrowKLeft) {VentanaJuego.PANEL.getEnemigo().mover(-VELOCIDAD);
             VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-left.png");
