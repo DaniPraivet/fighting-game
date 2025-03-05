@@ -65,10 +65,10 @@ public class PanelJuego extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Consolas", Font.BOLD, 20));
 
-        String textoJugador = "Jugador -> " + jugador.getVidas() + " vidas | " + jugador.getDaño() + " daño";
+        String textoJugador = "Jugador -> " + jugador.getVidas() + " vidas | " + jugador.getDanyo() + " daño";
         g.drawString(textoJugador, 50, 50);
 
-        String textoEnemigo = "Enemigo -> " + enemigo.getVidas() + " vidas | " + enemigo.getDaño() + " daño";
+        String textoEnemigo = "Enemigo -> " + enemigo.getVidas() + " vidas | " + enemigo.getDanyo() + " daño";
         int anchoTexto = g.getFontMetrics().stringWidth(textoEnemigo);
         g.drawString(textoEnemigo, VentanaJuego.ANCHO_VENTANA - anchoTexto - 50, 50);
     }

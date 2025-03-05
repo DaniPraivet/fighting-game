@@ -20,7 +20,7 @@ public abstract class Entidad implements Personaje{
     public boolean enElAire = true;
     protected Color color;
     protected boolean congelado = false;
-    protected int daño = 0;
+    protected int danyo = 0;
     protected int vidas = 3;
 
     protected Rectangle hitbox;
@@ -39,8 +39,8 @@ public abstract class Entidad implements Personaje{
         return vidas;
     }
 
-    public int getDaño() {
-        return daño;
+    public int getDanyo() {
+        return danyo;
     }
 
     public void mover(int dx) {
@@ -129,19 +129,19 @@ public abstract class Entidad implements Personaje{
         }, 750);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
-            oponente.aumentarDaño(10);
+            oponente.aumentarDanyo(10);
             oponente.retroceso(this, 10);
         }
     }
 
-    public void aumentarDaño(int cantidad) {
-        daño += cantidad;
-        if (daño > 999) daño = 999;
+    public void aumentarDanyo(int cantidad) {
+        danyo += cantidad;
+        if (danyo > 999) danyo = 999;
     }
 
     public void retroceso(Entidad enemy, int baseRetroceso) {
         int direccion = (x < enemy.getX()) ? -1 : 1;
-        double retrocesoFinal = baseRetroceso * (1 + (daño / 10.0)/10);
+        double retrocesoFinal = baseRetroceso * (1 + (danyo / 10.0)/10);
 
         velocity.setVelocityX(retrocesoFinal * direccion);
         velocity.setVelocityY(-retrocesoFinal);
@@ -150,7 +150,7 @@ public abstract class Entidad implements Personaje{
 
     public boolean perderVida(Plataforma plataforma) {
         vidas--;
-        daño = 0;
+        danyo = 0;
 
         if (vidas <= 0) {
             vidas = 0;
@@ -172,7 +172,7 @@ public abstract class Entidad implements Personaje{
         int barraX = x;
         int barraY = (int) y - 10;
 
-        Color colorBarra = DamageColors.getColor(daño);
+        Color colorBarra = DamageColors.getColor(danyo);
 
         g.setColor(new Color (60,0,0));
         g.fillRect(barraX, barraY, barraAncho, barraAlto);
