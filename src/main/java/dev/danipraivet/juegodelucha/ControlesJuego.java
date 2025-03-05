@@ -38,7 +38,20 @@ public class ControlesJuego implements KeyListener {
         if (arrowKRight) {VentanaJuego.PANEL.getEnemigo().mover(VELOCIDAD);
             VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-right.png");
         }
-        if (arrowKUp) VentanaJuego.PANEL.getEnemigo().saltar();
+        if (arrowKUp && puedeSaltar) {
+            VentanaJuego.PANEL.getEnemigo().saltar();
+            puedeSaltar = false;
+
+
+            new Thread(() -> {
+                try {
+                    Thread.sleep(250); // Esperar 250ms
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                puedeSaltar = true;
+            }).start();
+        }
         if (arrowKDown) VentanaJuego.PANEL.getEnemigo().acelerarCaida();
     }
 
