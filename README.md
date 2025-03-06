@@ -19,7 +19,6 @@ Es un juego que he hecho en mis ratos libres porque estaba aburrido. En este cas
 
   - `p` -> Neutral ligero (nLight -> Neutral light)
 
-Aún estoy con el sistema de ataques y daño, solo quería comprobar que tan dificil era hacer un sistema de plataformas básico.
 
 ## Mecánicas
 
