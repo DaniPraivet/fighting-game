@@ -63,14 +63,14 @@ public class ControlesJuego implements KeyListener {
             case 68 -> d = true; // D
             case 87 -> w = true; // W
             case 83 -> s = true; // S
-            case 69 -> VentanaJuego.PANEL.getJugador().atacar(VentanaJuego.PANEL.getEnemigo()); // E
+            case 69 -> VentanaJuego.PANEL.getJugador().nLight(VentanaJuego.PANEL.getEnemigo()); // E
 
             // Controles Enemigo
             case 37 -> arrowKLeft = true;   // <-
             case 39 -> arrowKRight = true;  // ->
             case 38 -> arrowKUp = true;     // ↑
             case 40 -> arrowKDown = true;   // ↓
-            case 80 -> VentanaJuego.PANEL.getEnemigo().atacar(VentanaJuego.PANEL.getJugador()); // P
+            case 80 -> VentanaJuego.PANEL.getEnemigo().nLight(VentanaJuego.PANEL.getJugador()); // P
         }
     }
 

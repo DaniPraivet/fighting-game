@@ -105,7 +105,7 @@ public abstract class Entidad implements Personaje{
     }
 
 
-    public void atacar(Entidad oponente) {
+    public void nLight(Entidad oponente) {
         if (congelado) return;
 
         congelado = true;
@@ -118,6 +118,7 @@ public abstract class Entidad implements Personaje{
 
         int hitboxAncho = 100;
         int hitboxAlto = 20;
+
         int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
         int hitboxY = (int) y + (ALTO / 3);
 
@@ -128,12 +129,14 @@ public abstract class Entidad implements Personaje{
             @Override
             public void run() {
                 mostrarHitbox = false;
+                oponente.congelado = false;
             }
-        }, 750);
+        }, 500);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
             oponente.aumentarDanyo(10);
             oponente.retroceso(this, 10);
+            oponente.congelado = true;
         }
     }
 
