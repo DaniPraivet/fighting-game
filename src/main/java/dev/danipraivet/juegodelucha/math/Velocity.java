@@ -6,7 +6,7 @@ public class Velocity {
     private static final double DEFAULT_GRAVITY = 0.5;
     private static final double AIR_FRICTION = 0.2;
     private static final double PLATFORM_FRICTION = 1.25;
-    private static final int MAX_VELOCITY = 10;
+    private static final int MAX_VELOCITY = 5;
     private double x;
     private double y;
     private double gravity = 0.5;
