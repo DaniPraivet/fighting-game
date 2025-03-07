@@ -2,6 +2,7 @@ package dev.danipraivet.juegodelucha.entities;
 
 import dev.danipraivet.juegodelucha.map.Plataforma;
 import dev.danipraivet.juegodelucha.math.Velocity;
+import dev.danipraivet.juegodelucha.window.VentanaJuego;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,8 @@ import java.util.TimerTask;
 
 
 public abstract class Entidad implements Personaje{
-    protected final int ANCHO = 30;
-    public final int ALTO = 50;
+    protected static int ANCHO = 40;
+    public static int ALTO = 50;
     protected final int velocidadDeSalto = -10;
     protected int x;
     protected double y;
@@ -27,11 +28,23 @@ public abstract class Entidad implements Personaje{
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
 
+    static {
+        calcularTamanyoPersojes(VentanaJuego.ANCHO_VENTANA, VentanaJuego.ALTO_VENTANA);
+    }
+
     public Entidad(int x, int y, Color color) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.velocity = new Velocity(0, 0);
+    }
+
+    public static void calcularTamanyoPersojes(int RES_ANCHO, int RES_ALTO) {
+        int resBaseAncho = 1280;
+        int resBaseAlto = 720;
+
+        ANCHO = (ANCHO * RES_ANCHO) / resBaseAncho;
+        ALTO = (ALTO * RES_ALTO) / resBaseAlto;
     }
 
     public int getVidas() {

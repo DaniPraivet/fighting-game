@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class VentanaJuego extends JFrame {
     public static PanelJuego PANEL;
-    public static final int ANCHO_VENTANA = 1280;
-    public static final int ALTO_VENTANA = 720;
+    public static final int ANCHO_VENTANA = 1920;
+    public static final int ALTO_VENTANA = 1080;
 
     public VentanaJuego() {
         setTitle("Ñawlhalla");
