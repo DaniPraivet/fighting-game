@@ -11,8 +11,8 @@ import java.util.TimerTask;
 
 
 public abstract class Entidad implements Personaje{
-    protected final int ANCHO;
-    public final int ALTO;
+    protected final int ANCHO = 30;
+    public final int ALTO = 50;
     protected final int velocidadDeSalto = -10;
     protected int x;
     protected double y;
@@ -27,11 +27,9 @@ public abstract class Entidad implements Personaje{
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
 
-    public Entidad(int x, int y, int ancho, int alto, Color color) {
+    public Entidad(int x, int y, Color color) {
         this.x = x;
         this.y = y;
-        this.ANCHO = ancho;
-        this.ALTO = alto;
         this.color = color;
         this.velocity = new Velocity(0, 0);
     }
