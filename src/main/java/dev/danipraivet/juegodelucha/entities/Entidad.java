@@ -145,7 +145,7 @@ public abstract class Entidad implements Personaje{
         }, 500);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
-            oponente.aumentarDanyo(10);
+            oponente.aumentarDanyo(25);
             oponente.retroceso(this, 10);
             oponente.congelado = true;
         }
