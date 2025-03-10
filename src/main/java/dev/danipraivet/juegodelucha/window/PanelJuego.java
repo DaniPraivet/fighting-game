@@ -88,11 +88,23 @@ public class PanelJuego extends JPanel {
         jugador.verificarColision(plataforma);
         enemigo.verificarColision(plataforma);
 
-        if (jugador.getY() > getHeight()) {
+        /*
+         * Límites de pantalla para Jugador/Enemigo, si alguno de estos sobrepasa los límites
+         * pierde 1 vida y es teletransportado de vuelta a la plataforma.
+         * Se usan paréntesis para que sea más cómodo cambiar los valores
+         */
+
+        if (jugador.getY() > (getHeight() + 100) ||
+                jugador.getY() < (0 - 100) ||
+                jugador.getX() > (getWidth() + 100) ||
+                jugador.getX() < (0 - 100)) {
             RUNNING = jugador.perderVida(plataforma);
 
         }
-        if (enemigo.getY() > getHeight()) {
+        if (enemigo.getY() > (getHeight() + 100) ||
+                enemigo.getY() < (0 - 100) ||
+                enemigo.getX() > (getWidth() + 100) ||
+                enemigo.getX() < (0 - 100)) {
             RUNNING = enemigo.perderVida(plataforma);
         }
     }
