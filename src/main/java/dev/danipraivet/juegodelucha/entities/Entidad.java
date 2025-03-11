@@ -11,8 +11,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public abstract class Entidad implements Personaje{
-    protected static int ANCHO = 40;
+public abstract class Entidad implements Personaje {
+    private static int ANCHO = 40;
     public static int ALTO = 50;
     protected final int velocidadDeSalto = -10;
     protected int x;
@@ -24,6 +24,7 @@ public abstract class Entidad implements Personaje{
     protected int danyo = 0;
     protected int vidas = 3;
     protected int saltosRestantes = 2;
+    protected boolean canJump = true;
 
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
@@ -62,12 +63,21 @@ public abstract class Entidad implements Personaje{
     }
 
     public void saltar() {
+        canJump = false;
+
         if (saltosRestantes > 0) {
             velocity.setVelocityY(velocidadDeSalto);
             enElAire = true;
             velocity.setDefaultGravity();
             saltosRestantes--;
         }
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                canJump = true;
+            }
+        }, 250);
     }
 
     public void actualizar() {
@@ -83,8 +93,8 @@ public abstract class Entidad implements Personaje{
     public void verificarColision(Plataforma plataforma) {
         boolean sobrePlataforma =
                 y + ALTO >= plataforma.getY() &&
-                x + ANCHO > plataforma.getX() &&
-                x < plataforma.getX() + plataforma.getAncho();
+                        x + ANCHO > plataforma.getX() &&
+                        x < plataforma.getX() + plataforma.getAncho();
 
         if (sobrePlataforma) {
             y = plataforma.getY() - ALTO;
@@ -92,7 +102,7 @@ public abstract class Entidad implements Personaje{
             velocity.setVelocityY(0);
             velocity.setDefaultGravity();
             saltosRestantes = 2;
-        } else if (!enElAire){
+        } else if (!enElAire) {
             enElAire = true;
         }
     }
@@ -144,7 +154,7 @@ public abstract class Entidad implements Personaje{
             }
         }, 500);
 
-        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), oponente.ANCHO, oponente.ALTO))) {
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) { // TODO: Make ANCHO and ALTO independent for every entity.
             oponente.aumentarDanyo(25);
             oponente.retroceso(this, 10);
             oponente.congelado = true;
@@ -158,12 +168,11 @@ public abstract class Entidad implements Personaje{
 
     public void retroceso(Entidad enemy, int baseRetroceso) {
         int direccion = (x < enemy.getX()) ? -1 : 1;
-        double retrocesoFinal = 5+(Math.pow(danyo, 2)) / (4 * 500);
-
+        double retrocesoFinal = 5 + (Math.pow(danyo, 2)) / (4 * 500);
 
 
         velocity.setVelocityX(retrocesoFinal * direccion);
-        velocity.setVelocityY(-retrocesoFinal/1.5);
+        velocity.setVelocityY(-retrocesoFinal / 1.5);
         enElAire = true;
     }
 
@@ -193,7 +202,7 @@ public abstract class Entidad implements Personaje{
 
         Color colorBarra = DamageColors.getColor(danyo);
 
-        g.setColor(new Color (60,0,0));
+        g.setColor(new Color(60, 0, 0));
         g.fillRect(barraX, barraY, barraAncho, barraAlto);
 
         g.setColor(colorBarra);
@@ -227,5 +236,13 @@ public abstract class Entidad implements Personaje{
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean canJump() {
+        return canJump;
+    }
+
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
     }
 }
