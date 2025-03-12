@@ -127,6 +127,7 @@ public abstract class Entidad implements Personaje {
 
     /*
     Metodo nLight temporal hasta que funcione bien el nuevo
+
     public void nLight(Entidad oponente) {
         if (congelado) return;
 
