@@ -125,7 +125,8 @@ public abstract class Entidad implements Personaje {
         }
     }
 
-
+    /*
+    Metodo nLight temporal hasta que funcione bien el nuevo
     public void nLight(Entidad oponente) {
         if (congelado) return;
 
@@ -160,6 +161,60 @@ public abstract class Entidad implements Personaje {
             oponente.congelado = true;
         }
     }
+     */
+
+    public void nLight(Entidad oponente) {
+        if (congelado) return;
+
+        congelado = true;
+        Timer timer = new Timer();
+        int[] golpes = {3, 3, 3, 10}; // Daño * ataque
+
+        for (int i = 0; i < golpes.length; i++) {
+            int golpeIndex = i;
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (golpeIndex == 3 && !hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+                        congelado = false;
+                        return; // Si el 3er golpe no conecta, el 4o no ocurre
+                    }
+
+                    ejecutarGolpe(oponente, golpes[golpeIndex]);
+
+                    // Si es el último golpe, desbloquear al jugador
+                    if (golpeIndex == golpes.length - 1) {
+                        congelado = false;
+                    }
+                }
+            }, golpeIndex * 200);
+        }
+    }
+
+    private void ejecutarGolpe(Entidad oponente, int danyo) {
+        int hitboxAncho = 100;
+        int hitboxAlto = 20;
+        int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
+        int hitboxY = (int) y + (ALTO / 3);
+
+        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
+        mostrarHitbox = true;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mostrarHitbox = false;
+            }
+        }, 100);
+
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+            oponente.aumentarDanyo(danyo);
+            oponente.retroceso(this, danyo / 2); // Pequeño retroceso
+        }
+    }
+
+
+
 
     public void aumentarDanyo(int cantidad) {
         danyo += cantidad;
