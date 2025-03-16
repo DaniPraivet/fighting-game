@@ -169,7 +169,8 @@ public abstract class Entidad implements Personaje {
 
         congelado = true;
         Timer timer = new Timer();
-        int[] golpes = {3, 3, 3, 10}; // Daño * ataque
+        int[] golpes = {3,3,3,10};
+        boolean[] esAgarre = {true, true, true, false}; // Indica si cada golpe es un puente
 
         for (int i = 0; i < golpes.length; i++) {
             int golpeIndex = i;
@@ -181,9 +182,8 @@ public abstract class Entidad implements Personaje {
                         return; // Si el 3er golpe no conecta, el 4o no ocurre
                     }
 
-                    ejecutarGolpe(oponente, golpes[golpeIndex]);
+                    ejecutarGolpe(oponente, golpes[golpeIndex], esAgarre[golpeIndex]);
 
-                    // Si es el último golpe, desbloquear al jugador
                     if (golpeIndex == golpes.length - 1) {
                         congelado = false;
                     }
@@ -192,7 +192,8 @@ public abstract class Entidad implements Personaje {
         }
     }
 
-    private void ejecutarGolpe(Entidad oponente, int danyo) {
+
+    private void ejecutarGolpe(Entidad oponente, int danyo, boolean esPuente) {
         int hitboxAncho = 100;
         int hitboxAlto = 20;
         int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
@@ -210,9 +211,11 @@ public abstract class Entidad implements Personaje {
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
             oponente.aumentarDanyo(danyo);
-            oponente.retroceso(this, danyo / 2); // Pequeño retroceso
+            oponente.retroceso(this, danyo, esPuente);
         }
     }
+
+
 
 
 
@@ -222,15 +225,23 @@ public abstract class Entidad implements Personaje {
         if (danyo > 999) danyo = 999;
     }
 
-    public void retroceso(Entidad enemy, int baseRetroceso) {
+    public void retroceso(Entidad enemy, int baseRetroceso, boolean esPuente) {
         int direccion = (x < enemy.getX()) ? -1 : 1;
-        double retrocesoFinal = 5 + (Math.pow(danyo, 2)) / (4 * 500);
 
+        if (esPuente) {
+            // Retroceso fijo muy bajo si es un ataque puente
+            enemy.velocity.setVelocityX(3 * direccion);
+            enemy.velocity.setVelocityY(-2);
+        } else {
+            // Retroceso normal
+            double retrocesoFinal = baseRetroceso + (Math.pow(danyo, 2)) / (4 * 500);
+            enemy.velocity.setVelocityX(retrocesoFinal * direccion);
+            enemy.velocity.setVelocityY(-retrocesoFinal / 1.5);
+        }
 
-        velocity.setVelocityX(retrocesoFinal * direccion);
-        velocity.setVelocityY(-retrocesoFinal / 1.5);
-        enElAire = true;
+        enemy.enElAire = true;
     }
+
 
     public boolean perderVida(Plataforma plataforma) {
         vidas--;
