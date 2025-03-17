@@ -211,7 +211,7 @@ public abstract class Entidad implements Personaje {
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
             oponente.aumentarDanyo(danyo);
-            oponente.retroceso(this, danyo, esPuente);
+            oponente.retroceso(this, oponente, danyo, esPuente);
         }
     }
 
@@ -225,12 +225,13 @@ public abstract class Entidad implements Personaje {
         if (danyo > 999) danyo = 999;
     }
 
-    public void retroceso(Entidad enemy, int baseRetroceso, boolean esPuente) {
-        int direccion = (x < enemy.getX()) ? -1 : 1;
+    public void retroceso(Entidad jugador, Entidad enemy, int baseRetroceso, boolean esPuente) {
+        int direccion = (jugador.getX() < enemy.getX()) ? 1 : -1;
+        System.out.println(jugador.getX());
 
         if (esPuente) {
             // Retroceso fijo muy bajo si es un ataque puente
-            enemy.velocity.setVelocityX(3 * direccion);
+            enemy.velocity.setVelocityX(-2 * direccion);
             enemy.velocity.setVelocityY(-2);
         } else {
             // Retroceso normal
