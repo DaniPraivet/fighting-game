@@ -29,17 +29,39 @@ public abstract class Entidad implements Personaje {
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public boolean canJump() {
+        return canJump;
+    }
+
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
+    }
+
     static {
         calcularTamanyoPersojes(VentanaJuego.ANCHO_VENTANA, VentanaJuego.ALTO_VENTANA);
     }
-
     public Entidad(int x, int y, Color color) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.velocity = new Velocity(0, 0);
     }
-
     public static void calcularTamanyoPersojes(int RES_ANCHO, int RES_ALTO) {
         int resBaseAncho = 1280;
         int resBaseAlto = 720;
@@ -47,7 +69,6 @@ public abstract class Entidad implements Personaje {
         ANCHO = (ANCHO * RES_ANCHO) / resBaseAncho;
         ALTO = (ALTO * RES_ALTO) / resBaseAlto;
     }
-
     public int getVidas() {
         return vidas;
     }
@@ -61,7 +82,6 @@ public abstract class Entidad implements Personaje {
             velocity.addVelocityX(dx);
         }
     }
-
     public void saltar() {
         canJump = false;
 
@@ -89,7 +109,6 @@ public abstract class Entidad implements Personaje {
             velocity.setGravity(velocity.getGravity() * 1.15);
         }
     }
-
     public void verificarColision(Plataforma plataforma) {
         boolean sobrePlataforma =
                 y + ALTO >= plataforma.getY() &&
@@ -106,7 +125,6 @@ public abstract class Entidad implements Personaje {
             enElAire = true;
         }
     }
-
     public void dibujar(Graphics2D g) {
         if (sprite != null) {
             g.drawImage(sprite, x, (int) y, ANCHO, ALTO, null);
@@ -125,76 +143,8 @@ public abstract class Entidad implements Personaje {
         }
     }
 
-    /*
-    Metodo nLight temporal hasta que funcione bien el nuevo
-
-    public void nLight(Entidad oponente) {
-        if (congelado) return;
-
-        congelado = true;
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                congelado = false;
-            }
-        }, 750);
-
-        int hitboxAncho = 100;
-        int hitboxAlto = 20;
-
-        int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
-        int hitboxY = (int) y + (ALTO / 3);
-
-        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
-        mostrarHitbox = true;
-
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mostrarHitbox = false;
-                oponente.congelado = false;
-            }
-        }, 500);
-
-        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) { // TODO: Make ANCHO and ALTO independent for every entity.
-            oponente.aumentarDanyo(25);
-            oponente.retroceso(this, 10);
-            oponente.congelado = true;
-        }
-    }
-     */
-
-    public void nLight(Entidad oponente) {
-        if (congelado) return;
-
-        congelado = true;
-        Timer timer = new Timer();
-        int[] golpes = {3,3,3,10};
-        boolean[] esAgarre = {true, true, true, false}; // Indica si cada golpe es un puente
-
-        for (int i = 0; i < golpes.length; i++) {
-            int golpeIndex = i;
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (golpeIndex == 3 && !hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
-                        congelado = false;
-                        return; // Si el 3er golpe no conecta, el 4o no ocurre
-                    }
-
-                    ejecutarGolpe(oponente, golpes[golpeIndex], esAgarre[golpeIndex]);
-
-                    if (golpeIndex == golpes.length - 1) {
-                        congelado = false;
-                    }
-                }
-            }, golpeIndex * 200);
-        }
-    }
-
-
     private void ejecutarGolpe(Entidad oponente, int danyo, boolean esPuente) {
-        int hitboxAncho = 100;
+        int hitboxAncho = 20;
         int hitboxAlto = 20;
         int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
         int hitboxY = (int) y + (ALTO / 3);
@@ -209,17 +159,11 @@ public abstract class Entidad implements Personaje {
             }
         }, 100);
 
-        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {// TODO: Make ANCHO and ALTO independent for every entity.
             oponente.aumentarDanyo(danyo);
             oponente.retroceso(this, oponente, danyo, esPuente);
         }
     }
-
-
-
-
-
-
     public void aumentarDanyo(int cantidad) {
         danyo += cantidad;
         if (danyo > 999) danyo = 999;
@@ -290,27 +234,98 @@ public abstract class Entidad implements Personaje {
         }
     }
 
-    public int getX() {
-        return x;
+    /***
+     * ATAQUES
+     */
+
+    public void nLight(Entidad oponente) {
+        if (congelado) return;
+        congelado = true;
+        Timer timer = new Timer();
+        int[] golpes = {3,3,3,10};
+        boolean[] esAgarre = {true, true, true, false}; // Indica si cada golpe es un puente
+
+        for (int i = 0; i < golpes.length; i++) {
+            int golpeIndex = i;
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (golpeIndex == 3 && !hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+                        congelado = false;
+                        return; // Si el 3er golpe no conecta, el 4o no ocurre
+                    }
+
+                    ejecutarGolpe(oponente, golpes[golpeIndex], esAgarre[golpeIndex]);
+
+                    if (golpeIndex == golpes.length - 1) {
+                        congelado = false;
+                    }
+                }
+            }, golpeIndex * 200);
+        }
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void sLight(Entidad oponente, boolean haciaDerecha) {
+        if (congelado) return;
+        congelado = true;
+
+        int desplazamiento = haciaDerecha ? 40 : -40;
+        int hitboxAncho = 50;
+        int hitboxAlto = 25;
+        int danyo = 12;
+
+        x += desplazamiento;
+
+        int hitboxX = haciaDerecha ? x + ANCHO : x - hitboxAncho;
+        int hitboxY = (int) y + (ALTO / 3);
+
+        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
+        mostrarHitbox = true;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mostrarHitbox = false;
+                congelado = false;
+            }
+        }, 300);
+
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+            oponente.aumentarDanyo(danyo);
+            oponente.retroceso(this, oponente, 10, false); // Empuje moderado
+        }
     }
 
-    public double getY() {
-        return y;
+    public void dLight (Entidad oponente) {
+        if (congelado) {
+            return;
+        }
+        int desplazamiento = (x < oponente.getX()) ? 40 : -40;
+        int hitboxAncho = 50;
+        int hitboxAlto = 25;
+        int danyo = 5;
+
+        x += desplazamiento;
+
+        int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
+        int hitboxY = (int) y + (ALTO / 10);
+
+        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
+        mostrarHitbox = true;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mostrarHitbox = false;
+                congelado = false;
+            }
+        }, 300);
+
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+            oponente.aumentarDanyo(danyo);
+            oponente.retroceso(this, oponente, 10, false); // Empuje moderado
+        }
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
 
-    public boolean canJump() {
-        return canJump;
-    }
-
-    public void setCanJump(boolean canJump) {
-        this.canJump = canJump;
-    }
 }
