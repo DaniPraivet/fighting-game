@@ -17,7 +17,8 @@ repositories {
 }
 
 dependencies {
-    // Project dependencies
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.jar {
@@ -26,6 +27,10 @@ tasks.jar {
             "Main-Class" to "dev.danipraivet.juegodelucha.Main"
         )
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.processResources {
