@@ -33,8 +33,8 @@ public class PanelJuego extends JPanel {
         int plataformaAncho = VentanaJuego.ANCHO_VENTANA / 2;
         int plataformaAlto = 100;
 
-        jugador = new Jugador(plataformaX + 50,plataformaY -50);
-        enemigo = new Enemigo(plataformaX + plataformaAncho -80, plataformaY -50);
+        jugador = new Jugador(plataformaX + 50,plataformaY -100);
+        enemigo = new Enemigo(plataformaX + plataformaAncho -80, plataformaY -100);
         plataforma = new Plataforma(
                 plataformaX,
                 plataformaY,
