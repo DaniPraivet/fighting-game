@@ -76,4 +76,8 @@ public class Velocity {
     public void setDefaultGravity() {
         this.gravity = DEFAULT_GRAVITY;
     }
+
+    public double getVelocityY() {
+        return this.y;
+    }
 }

@@ -110,8 +110,13 @@ public abstract class Entidad implements Personaje {
         }
     }
     public void verificarColision(Plataforma plataforma) {
+        Rectangle hitboxEntidad = new Rectangle(x, (int) y, ANCHO, ALTO);
+        Rectangle hitboxPlataforma = new Rectangle(plataforma.getX(), plataforma.getY(), plataforma.getAncho(), plataforma.getAlto());
+
+        // Colisión con la parte superior de la plataforma
         boolean sobrePlataforma =
                 y + ALTO >= plataforma.getY() &&
+                        y + ALTO - velocity.getVelocityY() <= plataforma.getY() &&
                         x + ANCHO > plataforma.getX() &&
                         x < plataforma.getX() + plataforma.getAncho();
 
@@ -121,10 +126,25 @@ public abstract class Entidad implements Personaje {
             velocity.setVelocityY(0);
             velocity.setDefaultGravity();
             saltosRestantes = 2;
-        } else if (!enElAire) {
+            return;
+        }
+
+        // Colisión con los lados de la plataforma
+        if (hitboxEntidad.intersects(hitboxPlataforma)) {
+            if (x + ANCHO - 5 <= plataforma.getX()) {
+                x = plataforma.getX() - ANCHO;
+                velocity.setVelocityX(0);
+            } else if (x >= plataforma.getX() + plataforma.getAncho() - 5) {
+                x = plataforma.getX() + plataforma.getAncho();
+                velocity.setVelocityX(0);
+            }
+        }
+
+        if (!enElAire) {
             enElAire = true;
         }
     }
+
     public void dibujar(Graphics2D g) {
         if (sprite != null) {
             g.drawImage(sprite, x, (int) y, ANCHO, ALTO, null);
