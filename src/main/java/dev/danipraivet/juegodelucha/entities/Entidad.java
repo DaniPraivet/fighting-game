@@ -211,15 +211,18 @@ public abstract class Entidad implements Personaje {
     public boolean perderVida(Plataforma plataforma) {
         vidas--;
         danyo = 0;
-
         if (vidas <= 0) {
             vidas = 0;
             return false;
         }
         if (this instanceof Jugador) {
             setX(plataforma.getX() + plataforma.getAncho() / 3);
+            velocity.setVelocityX(0);
+            velocity.setVelocityY(0);
         } else if (this instanceof Enemigo) {
             setX(plataforma.getX() + (plataforma.getAncho() * 2) / 3);
+            velocity.setVelocityX(0);
+            velocity.setVelocityY(0);
         }
 
         setY(plataforma.getY() - ALTO);
@@ -316,22 +319,23 @@ public abstract class Entidad implements Personaje {
         }
     }
 
-    public void dLight (Entidad oponente) {
-        if (congelado) {
-            return;
-        }
+    public void dLight(Entidad oponente) {
+        if (this.congelado) return;
+
+        this.congelado = true;
         int desplazamiento = (x < oponente.getX()) ? 40 : -40;
         int hitboxAncho = 50;
-        int hitboxAlto = 25;
+        int hitboxAlto = 20;
         int danyo = 5;
 
-        x += desplazamiento;
 
-        int hitboxX = (x < oponente.getX()) ? x + ANCHO : x - hitboxAncho;
-        int hitboxY = (int) y + (ALTO / 10);
+        this.x += desplazamiento;
 
-        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
-        mostrarHitbox = true;
+        int hitboxX = (x < oponente.getX()) ? this.x + ANCHO : this.x - hitboxAncho;
+        int hitboxY = (int) y + ALTO - hitboxAlto;
+
+        this.hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
+        this.mostrarHitbox = true;
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -343,9 +347,17 @@ public abstract class Entidad implements Personaje {
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
             oponente.aumentarDanyo(danyo);
-            oponente.retroceso(this, oponente, 10, false); // Empuje moderado
+            oponente.retrocesoFijo(0, -5);
         }
     }
+
+    public void retrocesoFijo(int fuerzaX, int fuerzaY) {
+        this.velocity.setVelocityX(fuerzaX);
+        this.velocity.setVelocityY(fuerzaY);
+        this.enElAire = true;
+    }
+
+
 
 
 }
