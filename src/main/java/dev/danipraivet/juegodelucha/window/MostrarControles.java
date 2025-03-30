@@ -5,11 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MostrarControles extends JPanel {
-    private VentanaJuego ventana;
     private MenuPrincipal menu;
 
-    public MostrarControles(VentanaJuego ventana) {
-        this.ventana = ventana;
+    public MostrarControles(VentanaJuego ventana, MenuPrincipal menu) {
         setLayout(new GridBagLayout());
         setBackground(Color.DARK_GRAY);
 
@@ -54,8 +52,8 @@ public class MostrarControles extends JPanel {
                 Down Light: DOWN arrow + P (grounded)
                 """);
 
-        JButton btnSalir = crearBoton("Exit", Color.GRAY);
-        btnSalir.addActionListener(e -> System.exit(0));
+        JButton btnSalir = crearBoton("Return", Color.GRAY);
+        btnSalir.addActionListener(e -> ventana.mostrarMenu());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15,15,15,15);
@@ -67,16 +65,18 @@ public class MostrarControles extends JPanel {
         gbc.gridy = 2;
         add(player1Bindings, gbc);
 
-        gbc.gridx = 15;
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        add(btnSalir, gbc);
+
+        gbc.gridx = 3;
         gbc.gridy = 1;
         add(player2Title, gbc);
 
         gbc.gridy = 2;
         add(player2Bindings, gbc);
 
-        gbc.gridx = 15;
-        gbc.gridy = 3;
-        add(btnSalir, gbc);
+
     }
 
     private static JTextArea getjTextArea(String text) {

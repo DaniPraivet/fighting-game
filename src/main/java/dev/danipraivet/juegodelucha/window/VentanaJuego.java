@@ -3,9 +3,10 @@ package dev.danipraivet.juegodelucha.window;
 import dev.danipraivet.juegodelucha.ControlesJuego;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class VentanaJuego extends JFrame {
-    private MenuPrincipal menu;
+    private static MenuPrincipal menu;
     private MostrarControles controles;
     public static PanelJuego PANEL;
     public static final int ANCHO_VENTANA = 1920;
@@ -37,8 +38,14 @@ public class VentanaJuego extends JFrame {
     }
 
     public void mostrarControles() {
-        controles = new MostrarControles(this);
+        controles = new MostrarControles(this, menu);
         setContentPane(controles);
+        setVisible(true);
+    }
+
+    public void mostrarMenu() {
+        menu = new MenuPrincipal(this);
+        setContentPane(menu);
         setVisible(true);
     }
 }
