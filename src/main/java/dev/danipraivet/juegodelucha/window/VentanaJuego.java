@@ -6,6 +6,7 @@ import javax.swing.*;
 
 public class VentanaJuego extends JFrame {
     private MenuPrincipal menu;
+    private MostrarControles controles;
     public static PanelJuego PANEL;
     public static final int ANCHO_VENTANA = 1920;
     public static final int ALTO_VENTANA = 1080;
@@ -33,5 +34,11 @@ public class VentanaJuego extends JFrame {
         setFocusable(true);
         requestFocusInWindow();
 
+    }
+
+    public void mostrarControles() {
+        controles = new MostrarControles(this);
+        setContentPane(controles);
+        setVisible(true);
     }
 }
