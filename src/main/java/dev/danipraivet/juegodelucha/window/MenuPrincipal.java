@@ -13,8 +13,10 @@ public class MenuPrincipal extends JPanel {
 
         JButton btnJugar = crearBoton("Jugar", new Color(50, 205, 50)); // Verde
         JButton btnSalir = crearBoton("Salir", new Color(220, 20, 60)); // Rojo
+        JButton btnControles = crearBoton("Controles", Color.orange);
 
         btnJugar.addActionListener(e -> ventana.iniciarJuego());
+        btnControles.addActionListener(e -> ventana.mostrarControles());
         btnSalir.addActionListener(e -> System.exit(0));
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -25,6 +27,9 @@ public class MenuPrincipal extends JPanel {
         add(btnJugar, gbc);
 
         gbc.gridy = 1;
+        add(btnControles, gbc);
+
+        gbc.gridy = 2;
         add(btnSalir, gbc);
     }
 
