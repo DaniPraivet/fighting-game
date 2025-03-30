@@ -191,7 +191,7 @@ public abstract class Entidad implements Personaje {
 
     public void retroceso(Entidad jugador, Entidad enemy, int baseRetroceso, boolean esPuente) {
         int direccion = (jugador.getX() < enemy.getX()) ? 1 : -1;
-        System.out.println(jugador.getX());
+
 
         if (esPuente) {
             // Retroceso fijo muy bajo si es un ataque puente
