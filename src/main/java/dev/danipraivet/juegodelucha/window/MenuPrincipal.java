@@ -11,9 +11,9 @@ public class MenuPrincipal extends JPanel {
         setLayout(new GridBagLayout());
         setBackground(Color.DARK_GRAY); // Fondo oscuro
 
-        JButton btnJugar = crearBoton("Jugar", new Color(50, 205, 50)); // Verde
-        JButton btnSalir = crearBoton("Salir", new Color(220, 20, 60)); // Rojo
-        JButton btnControles = crearBoton("Controles", Color.orange);
+        JButton btnJugar = crearBoton("Play", new Color(50, 205, 50)); // Verde
+        JButton btnSalir = crearBoton("Exit", new Color(220, 20, 60)); // Rojo
+        JButton btnControles = crearBoton("Controls", Color.orange);
 
         btnJugar.addActionListener(e -> ventana.iniciarJuego());
         btnControles.addActionListener(e -> ventana.mostrarControles());
