@@ -49,10 +49,6 @@ public abstract class Entidad implements Personaje {
         return canJump;
     }
 
-    public void setCanJump(boolean canJump) {
-        this.canJump = canJump;
-    }
-
     static {
         calcularTamanyoPersojes(VentanaJuego.ANCHO_VENTANA, VentanaJuego.ALTO_VENTANA);
     }
@@ -378,6 +374,37 @@ public abstract class Entidad implements Personaje {
                 congelado = false;
             }
         }, 500);
+
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+            oponente.aumentarDanyo(danyo);
+            oponente.retroceso(this, oponente, 10, false);
+        }
+    }
+
+    public void sAir(Entidad oponente, boolean haciaDerecha) {
+        if (congelado) return;
+        congelado = true;
+
+        int desplazamiento = haciaDerecha ? 60 : -60;
+        int hitboxAncho = 40;
+        int hitboxAlto = 25;
+        int danyo = 17;
+
+        x += desplazamiento;
+
+        int hitboxX = haciaDerecha ? x + ANCHO : x - hitboxAncho;
+        int hitboxY = (int) y + (ALTO / 3);
+
+        hitbox = new Rectangle(hitboxX, hitboxY, hitboxAncho, hitboxAlto);
+        mostrarHitbox = true;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mostrarHitbox = false;
+                congelado = false;
+            }
+        }, 300);
 
         if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
             oponente.aumentarDanyo(danyo);
