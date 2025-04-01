@@ -362,6 +362,7 @@ public abstract class Entidad implements Personaje {
 
         this.congelado = true;
 
+        int danyo = 15;
         int hitboxAlto = ALTO + 50;
         int hitboxAncho = ANCHO + 50;
         int hitboxX = this.x - (hitboxAncho/3);
