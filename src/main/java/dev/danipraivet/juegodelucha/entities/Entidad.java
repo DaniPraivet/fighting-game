@@ -357,6 +357,33 @@ public abstract class Entidad implements Personaje {
         this.enElAire = true;
     }
 
+    public void nAir(Entidad oponente) {
+        if (this.congelado) return;
+
+        this.congelado = true;
+
+        int hitboxAlto = ALTO + 50;
+        int hitboxAncho = ANCHO + 50;
+        int hitboxX = this.x - (hitboxAncho/3);
+        int hitboxY = (int) this.y - (hitboxAlto/3);
+
+        this.hitbox = new Rectangle(hitboxX,hitboxY, hitboxAncho, hitboxAlto);
+        this.mostrarHitbox = true;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mostrarHitbox = false;
+                congelado = false;
+            }
+        }, 500);
+
+        if (hitbox.intersects(new Rectangle(oponente.getX(), (int) oponente.getY(), ANCHO, ALTO))) {
+            oponente.aumentarDanyo(danyo);
+            oponente.retroceso(this, oponente, 10, false);
+        }
+    }
+
 
 
 
