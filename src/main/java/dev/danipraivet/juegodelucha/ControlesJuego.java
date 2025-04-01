@@ -30,7 +30,11 @@ public class ControlesJuego implements KeyListener {
         if (arrowKLeft) {VentanaJuego.PANEL.getEnemigo().mover(-VELOCIDAD);
             VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-left.png");
         }
-        if (e && !s) VentanaJuego.PANEL.getJugador().nLight(VentanaJuego.PANEL.getEnemigo());
+        if (e && !s) {
+            if (!VentanaJuego.PANEL.getJugador().enElAire) {
+                VentanaJuego.PANEL.getJugador().nLight(VentanaJuego.PANEL.getEnemigo());
+            } else VentanaJuego.PANEL.getJugador().nAir(VentanaJuego.PANEL.getEnemigo());
+        }
 
         if (arrowKRight) {VentanaJuego.PANEL.getEnemigo().mover(VELOCIDAD);
             VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-right.png");
@@ -41,7 +45,11 @@ public class ControlesJuego implements KeyListener {
         if (arrowKDown) VentanaJuego.PANEL.getEnemigo().acelerarCaida();
         if (arrowKLeft|arrowKRight && p) VentanaJuego.PANEL.getEnemigo().sLight(VentanaJuego.PANEL.getJugador(),arrowKRight);
         if (arrowKDown && p) VentanaJuego.PANEL.getEnemigo().dLight(VentanaJuego.PANEL.getJugador());
-        if (p && !s) VentanaJuego.PANEL.getEnemigo().nLight(VentanaJuego.PANEL.getJugador());
+        if (p && !s) {
+            if (!VentanaJuego.PANEL.getEnemigo().enElAire) {
+                VentanaJuego.PANEL.getEnemigo().nLight(VentanaJuego.PANEL.getJugador());
+            } else VentanaJuego.PANEL.getEnemigo().nAir(VentanaJuego.PANEL.getJugador());
+        }
     }
 
     @Override
