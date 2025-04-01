@@ -11,7 +11,11 @@ public class ControlesJuego implements KeyListener {
 
     public static void update() {
         if (a|d && e) {
-            VentanaJuego.PANEL.getJugador().sLight(VentanaJuego.PANEL.getEnemigo(), d);
+            if (!VentanaJuego.PANEL.getJugador().enElAire) {
+                VentanaJuego.PANEL.getJugador().sLight(VentanaJuego.PANEL.getEnemigo(),d);
+            } else {
+                VentanaJuego.PANEL.getJugador().sAir(VentanaJuego.PANEL.getEnemigo(),d);
+            }
         }
         if (s && e) {
             VentanaJuego.PANEL.getJugador().dLight(VentanaJuego.PANEL.getEnemigo());
@@ -43,7 +47,15 @@ public class ControlesJuego implements KeyListener {
             VentanaJuego.PANEL.getEnemigo().saltar();
         }
         if (arrowKDown) VentanaJuego.PANEL.getEnemigo().acelerarCaida();
-        if (arrowKLeft|arrowKRight && p) VentanaJuego.PANEL.getEnemigo().sLight(VentanaJuego.PANEL.getJugador(),arrowKRight);
+        if (arrowKLeft|arrowKRight && p) {
+            if (!VentanaJuego.PANEL.getEnemigo().enElAire) {
+                VentanaJuego.PANEL.getEnemigo().sLight(VentanaJuego.PANEL.getJugador(),arrowKRight);
+            } else {
+                VentanaJuego.PANEL.getEnemigo().sAir(VentanaJuego.PANEL.getJugador(),arrowKRight);
+            }
+        }
+
+            else
         if (arrowKDown && p) VentanaJuego.PANEL.getEnemigo().dLight(VentanaJuego.PANEL.getJugador());
         if (p && !s) {
             if (!VentanaJuego.PANEL.getEnemigo().enElAire) {
