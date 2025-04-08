@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 public class ControlesJuego implements KeyListener {
     private static final int VELOCIDAD = 5;
-    private static boolean a, d, w, s, e, arrowKLeft, arrowKRight, arrowKUp, arrowKDown, p;
+    private static boolean a, d, w, s, e, q, arrowKLeft, arrowKRight, arrowKUp, arrowKDown, p, o;
 
     public static void update() {
         if (a|d && e) {
@@ -39,6 +39,12 @@ public class ControlesJuego implements KeyListener {
                 VentanaJuego.PANEL.getJugador().nLight(VentanaJuego.PANEL.getEnemigo());
             } else VentanaJuego.PANEL.getJugador().nAir(VentanaJuego.PANEL.getEnemigo());
         }
+        if (q && a|d) {
+            VentanaJuego.PANEL.getJugador().dash(d);
+        }
+
+
+
 
         if (arrowKRight) {VentanaJuego.PANEL.getEnemigo().mover(VELOCIDAD);
             VentanaJuego.PANEL.getEnemigo().setSprite("/entities/sprites/enemy-right.png");
@@ -62,6 +68,10 @@ public class ControlesJuego implements KeyListener {
                 VentanaJuego.PANEL.getEnemigo().nLight(VentanaJuego.PANEL.getJugador());
             } else VentanaJuego.PANEL.getEnemigo().nAir(VentanaJuego.PANEL.getJugador());
         }
+        if (o && arrowKRight|arrowKLeft) {
+            VentanaJuego.PANEL.getEnemigo().dash(arrowKRight);
+        }
+
     }
 
     @Override
@@ -73,6 +83,7 @@ public class ControlesJuego implements KeyListener {
             case 87 -> w = true; // W
             case 83 -> s = true; // S
             case 69 -> e = true; // E
+            case 81 -> q = true;
 
             // Controles Enemigo
             case 37 -> arrowKLeft = true;   // <-
@@ -80,6 +91,7 @@ public class ControlesJuego implements KeyListener {
             case 38 -> arrowKUp = true;     // ↑
             case 40 -> arrowKDown = true;   // ↓
             case 80 -> p = true; // P
+            case 79 -> o = true;
         }
     }
 
@@ -95,11 +107,13 @@ public class ControlesJuego implements KeyListener {
             case 87 -> w = false;
             case 83 -> s = false;
             case 69 -> e = false;
+            case 81 -> q = false;
             case 37 -> arrowKLeft = false;
             case 39 -> arrowKRight = false;
             case 38 -> arrowKUp = false;
             case 40 -> arrowKDown = false;
             case 80 -> p = false;
+            case 79 -> o = false;
         }
     }
 }
