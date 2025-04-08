@@ -7,6 +7,8 @@ import dev.danipraivet.juegodelucha.map.Plataforma;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class PanelJuego extends JPanel {
@@ -63,7 +65,6 @@ public class PanelJuego extends JPanel {
 
     private void dibujarInterfaz(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Consolas", Font.BOLD, 20));
 
         String textoJugador = "Jugador -> " + jugador.getVidas() + " vidas | " + jugador.getDanyo() + " daño";
         g.drawString(textoJugador, 50, 50);
@@ -112,15 +113,25 @@ public class PanelJuego extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        Graphics2D graphics2D = (Graphics2D) g;
+        try {
+            File archivoFuente = new File(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("/BigBlueTermPlusNerdFont-Regular.ttf")).getFile()));
+            Font fuente = Font.createFont(Font.TRUETYPE_FONT, archivoFuente).deriveFont(44f);
+            Graphics2D graphics2D = (Graphics2D) g;
 
-        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics2D.setFont(fuente);
 
-        jugador.dibujar(graphics2D);
-        enemigo.dibujar(graphics2D);
-        plataforma.dibujar(graphics2D);
+            graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        dibujarInterfaz(graphics2D);
+            jugador.dibujar(graphics2D);
+            enemigo.dibujar(graphics2D);
+            plataforma.dibujar(graphics2D);
+
+            dibujarInterfaz(graphics2D);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
     }
 }
