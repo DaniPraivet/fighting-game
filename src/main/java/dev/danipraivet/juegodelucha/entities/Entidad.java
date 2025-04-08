@@ -6,6 +6,7 @@ import dev.danipraivet.juegodelucha.window.VentanaJuego;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,6 +26,7 @@ public abstract class Entidad implements Personaje {
     protected int vidas = 3;
     protected int saltosRestantes = 2;
     protected boolean canJump = true;
+    protected boolean canDash = true;
 
     protected Rectangle hitbox;
     private boolean mostrarHitbox = false;
@@ -52,6 +54,7 @@ public abstract class Entidad implements Personaje {
     static {
         calcularTamanyoPersojes(VentanaJuego.ANCHO_VENTANA, VentanaJuego.ALTO_VENTANA);
     }
+
     public Entidad(int x, int y, Color color) {
         this.x = x;
         this.y = y;
@@ -105,6 +108,27 @@ public abstract class Entidad implements Personaje {
             velocity.setGravity(velocity.getGravity() * 1.15);
         }
     }
+
+    public void dash(boolean right) {
+        if (!canDash) {
+            return;
+        }
+        if (right) {
+            this.x += 150;
+        } else {
+            this.x -= 150;
+        }
+
+        canDash = false;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                canDash = true;
+            }
+        }, 1000);
+    }
+
+
     public void verificarColision(Plataforma plataforma) {
         Rectangle hitboxEntidad = new Rectangle(x, (int) y, ANCHO, ALTO);
         Rectangle hitboxPlataforma = new Rectangle(plataforma.getX(), plataforma.getY(), plataforma.getAncho(), plataforma.getAlto());
