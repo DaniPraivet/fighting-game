@@ -41,18 +41,18 @@ public abstract class MostrarControles extends JPanel {
                     Move Left: A
                     Move Right: D
                     Fast Fall: S (while in air)
-                
+               \s
                 Attacks:
-                    
+                   \s
                      - Grounded
                          Neutral Light: E (grounded)
                          Side Light: A/D + E (grounded)
                          Down Light: S + E (grounded)
-                
+               \s
                      - Aerial
                          Neutral Air: E (On air)
                          Side Air: A/D + E (On air)
-                """);
+               \s""");
             getjTextArea(player1Bindings, fuente);
             player1Bindings.setEditable(false);
 
