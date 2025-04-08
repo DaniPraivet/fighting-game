@@ -66,10 +66,10 @@ public class PanelJuego extends JPanel {
     private void dibujarInterfaz(Graphics2D g) {
         g.setColor(Color.WHITE);
 
-        String textoJugador = "Jugador -> " + jugador.getVidas() + " vidas | " + jugador.getDanyo() + " daño";
+        String textoJugador = "Player 1 -> " + jugador.getVidas() + " vidas | " + jugador.getDanyo() + " daño";
         g.drawString(textoJugador, 50, 50);
 
-        String textoEnemigo = "Enemigo -> " + enemigo.getVidas() + " vidas | " + enemigo.getDanyo() + " daño";
+        String textoEnemigo = "Player 2 -> " + enemigo.getVidas() + " vidas | " + enemigo.getDanyo() + " daño";
         int anchoTexto = g.getFontMetrics().stringWidth(textoEnemigo);
         g.drawString(textoEnemigo, VentanaJuego.ANCHO_VENTANA - anchoTexto - 50, 50);
     }

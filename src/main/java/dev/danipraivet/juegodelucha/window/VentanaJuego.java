@@ -1,13 +1,14 @@
 package dev.danipraivet.juegodelucha.window;
 
 import dev.danipraivet.juegodelucha.ControlesJuego;
+import dev.danipraivet.juegodelucha.window.Controles.ControlesEnemigo;
+import dev.danipraivet.juegodelucha.window.Controles.ControlesJugador;
+import dev.danipraivet.juegodelucha.window.Controles.MostrarControles;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class VentanaJuego extends JFrame {
     private static MenuPrincipal menu;
-    private MostrarControles controles;
     public static PanelJuego PANEL;
     public static final int ANCHO_VENTANA = 1920;
     public static final int ALTO_VENTANA = 1080;
@@ -38,9 +39,14 @@ public class VentanaJuego extends JFrame {
     }
 
     public void mostrarControles() {
-        controles = new MostrarControles(this, menu);
-        setContentPane(controles);
+        ControlesJugador cj = new ControlesJugador(this, menu);
+        ControlesEnemigo ce = new ControlesEnemigo(this, menu);
         setVisible(true);
+        JTabbedPane j = new JTabbedPane();
+        j.setBounds(0, 0, ANCHO_VENTANA, ALTO_VENTANA);
+        j.addTab("Player 1", cj);
+        j.addTab("Player 2", ce);
+        setContentPane(j);
     }
 
     public void mostrarMenu() {
