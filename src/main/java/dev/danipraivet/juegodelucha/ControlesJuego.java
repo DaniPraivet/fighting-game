@@ -128,6 +128,7 @@ public class ControlesJuego implements KeyListener {
             player.saltar();
         }
         if (s) player.acelerarCaida();
+
         if (q && (a||d)) {
             player.dash(d);
         }
@@ -137,7 +138,9 @@ public class ControlesJuego implements KeyListener {
      * Listener for player attacks
      */
     public static void playerAttackListener() {
+
         if ((a||d) && e) {
+
             if (!player.enElAire) {
                 player.sLight(enemy,d);
             } else {
@@ -169,7 +172,9 @@ public class ControlesJuego implements KeyListener {
             enemy.saltar();
         }
         if (arrowKDown && enemy.enElAire) enemy.acelerarCaida();
+
         if (o && (arrowKRight||arrowKLeft)) {
+
             enemy.dash(arrowKRight);
         }
     }
@@ -178,7 +183,9 @@ public class ControlesJuego implements KeyListener {
      * Listener for enemy attacks
      */
     public static void enemyAttackListener() {
+
         if ((arrowKLeft||arrowKRight) && p) {
+
             if (!enemy.enElAire) {
                 enemy.sLight(player,arrowKRight);
             } else {

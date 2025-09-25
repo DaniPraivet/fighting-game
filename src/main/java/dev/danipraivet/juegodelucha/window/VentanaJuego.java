@@ -27,7 +27,7 @@ public class VentanaJuego extends JFrame {
     }
 
     public void iniciarJuego() {
-        PANEL = new PanelJuego(this);
+        PANEL = new PanelJuego(this, true);
         setContentPane(PANEL);
         addKeyListener(new ControlesJuego());
         revalidate();

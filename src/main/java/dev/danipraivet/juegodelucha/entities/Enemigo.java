@@ -1,7 +1,5 @@
 package dev.danipraivet.juegodelucha.entities;
 
-import dev.danipraivet.juegodelucha.window.VentanaJuego;
-
 import java.awt.*;
 
 public class Enemigo extends Entidad {
@@ -11,3 +9,4 @@ public class Enemigo extends Entidad {
         setSprite("/entities/sprites/enemy-left.png");
     }
 }
+
