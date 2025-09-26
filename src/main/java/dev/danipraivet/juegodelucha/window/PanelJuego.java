@@ -23,7 +23,7 @@ public class PanelJuego extends JPanel {
         return plataforma;
     }
 
-    public PanelJuego(JFrame frame, boolean pvp) {
+    public PanelJuego(JFrame frame) {
         setBackground(Color.BLACK);
         setSize(frame.getSize());
 
@@ -36,7 +36,7 @@ public class PanelJuego extends JPanel {
         int plataformaAlto = 100;
 
         jugador = new Jugador(plataformaX + 50,plataformaY -100);
-        enemigo = new Enemigo(plataformaX + plataformaAncho -80, plataformaY -100, pvp);
+        enemigo = new Enemigo(plataformaX + plataformaAncho -80, plataformaY -100);
         plataforma = new Plataforma(
                 plataformaX,
                 plataformaY,
@@ -58,14 +58,6 @@ public class PanelJuego extends JPanel {
                     TimeUnit.MILLISECONDS.sleep(sleepTime);
                 } catch (InterruptedException e) {
                     System.out.println("Error generating next frame.");
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            while (RUNNING && pvp) {
-                if (getEnemigo().enElAire && (getEnemigo().getX() > VentanaJuego.ANCHO_VENTANA / 4) ||
-                        (getEnemigo().getX() > (VentanaJuego.ANCHO_VENTANA - VentanaJuego.ANCHO_VENTANA / 4))) {
-                    getEnemigo().volverAPlataforma();
                 }
             }
         }).start();
